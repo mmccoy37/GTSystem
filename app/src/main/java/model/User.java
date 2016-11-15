@@ -22,13 +22,18 @@ public class User {
      * @param accountType the type of account that this user has
      */
     public User(String username, String password, String email, String major, int year,
-                AccountType accountType) {
+                int type) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.year = year;
         this.major = major;
-        this.accountType = accountType;
+        if (type == 1) {
+            this.accountType = AccountType.ADMIN;
+        } else {
+            this.accountType = AccountType.STUDENT;
+        }
+
     }
 
     /*
@@ -38,11 +43,11 @@ public class User {
      * @param name the name of the user
      */
     public User(String username, String password, String email, String major, int year) {
-        this(username, password, email, major, year, AccountType.STUDENT);
+        this(username, password, email, major, year, 0);
     }
 
     public User(String username, String password) {
-        this(username, password, null, null, 0, AccountType.ADMIN);
+        this(username, password, null, null, 0, 1);
     }
 
     /*

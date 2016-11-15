@@ -19,7 +19,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import database.DatabaseHelper;
+import database.DatabaseAccess;
+
 import model.User;
 
 public class Signup extends AppCompatActivity {
@@ -32,13 +33,15 @@ public class Signup extends AppCompatActivity {
     private Spinner spinnerYear;
     private Spinner spinnerMajor;
 
-    private DatabaseHelper data = new DatabaseHelper(this);
+    private DatabaseAccess data = DatabaseAccess.getDatabaseAccess();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        data.setContext(this);
 
         // Hide keyboard when open Activity
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);

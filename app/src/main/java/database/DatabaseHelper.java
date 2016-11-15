@@ -30,9 +30,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "majorName VARCHAR(50) NOT NULL, " +
             "year INTEGER NOT NULL,  " +
             "PRIMARY KEY (GTechEmail), " +
-            "FOREIGN KEY (Username) REFERENCES USERS (Username), " +
-            "FOREIGN KEY (MajorName) REFERENCES MAJORS (MajorName), " +
-            "UNIQUE (Username));";
+            "FOREIGN KEY (username) REFERENCES USERS (username), " +
+            "FOREIGN KEY (majorName) REFERENCES MAJORS (majorName), " +
+            "UNIQUE (username));";
 
     private static final String INSERT_INITIAL_USERS = "INSERT INTO 'USERS' VALUES " +
             "('hungdo', '123456789', 1), " +
@@ -82,38 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        db.execSQL(delete);
 //    }
 
-
-    public void createUser(User u) {
-        db = this.getWritableDatabase();
-        ContentValues values1 = new ContentValues();
-        values1.put("username", u.getUsername());
-        values1.put("password", u.getPassword());
-        values1.put("type", 0);
-        db.insertOrThrow("USERS", null, values1);
-        ContentValues values2 = new ContentValues();
-        values2.put("GTechEmail", u.getEmail());
-        values2.put("username", u.getUsername());
-        values2.put("majorName", u.getMajor());
-        values2.put("year", u.getYear());
-        db.insertOrThrow("STUDENTS", null, values2);
-        db.close();
-    }
-
-    public String searchPassword(String username) {
-        db = this.getReadableDatabase();
-        String query = "SELECT username, password FROM USERS";
-        Cursor cursor = db.rawQuery(query, null);
-        String a = "";
-        String b = null;
-        if (cursor.moveToFirst()) {
-            do {
-                a = cursor.getString(0);
-                if (a.equals(username)) {
-                    b = cursor.getString(1);
-                    return b;
-                }
-            } while (cursor.moveToNext());
-        }
-        return null;
+    public SQLiteDatabase getDb() {
+        return db;
     }
 }
