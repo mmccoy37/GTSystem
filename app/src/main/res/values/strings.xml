@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Team44Phase3</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <string name="title_activity_display">Display</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_signup">Signup</string>
+</resources>
