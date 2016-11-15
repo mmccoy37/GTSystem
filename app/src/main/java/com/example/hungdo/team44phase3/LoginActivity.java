@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast error = Toast.makeText(this, "Password is incorrect!", Toast.LENGTH_SHORT);
                 error.show();
             } else {
+                data.setUser(u);
                 startActivity(new Intent(this, UserScreen.class));
             }
         }

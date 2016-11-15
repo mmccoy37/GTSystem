@@ -15,6 +15,7 @@ public class DatabaseAccess {
     private static DatabaseAccess databaseAccess;
     private SQLiteDatabase db;
     private DatabaseHelper dh;
+    private User user;
 
     /**
      * Call only once for setup Facade class
@@ -32,8 +33,28 @@ public class DatabaseAccess {
         db = dh.getDb();
     }
 
+    /**
+     * get database
+     * @return DatabaseAccess
+     */
     public static DatabaseAccess getDatabaseAccess() {
         return databaseAccess;
+    }
+
+    /**
+     * Get user
+     * @return User who are loggin
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Set user
+     * @param user user who will loggin
+     */
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**
