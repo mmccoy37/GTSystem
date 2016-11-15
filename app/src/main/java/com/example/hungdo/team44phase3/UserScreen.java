@@ -56,9 +56,6 @@ public class UserScreen extends Activity {
         list.add("Cat 2");
         list.add("Cat 3");
         list.add("Cat 4");
-//        adapter = new ArrayAdapter<>(
-//                this, android.R.layout.simple_spinner_item,list);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCat.setItems(list);
         spinnerCat.setSelectALL();
 
