@@ -4,6 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import model.User;
 
@@ -13,6 +20,7 @@ import model.User;
 
 public class DatabaseAccess {
     private static DatabaseAccess databaseAccess;
+    private static Connection connection;
     private SQLiteDatabase db;
     private DatabaseHelper dh;
     private User user;
@@ -21,6 +29,25 @@ public class DatabaseAccess {
      * Call only once for setup Facade class
      */
     public static void Initialize() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            connection = DriverManager.getConnection("jdbc:mysql://academicmysql.cc.gatech.edu/cs4400_Team_44",
+                    "cs4400_Team_44",
+                    "eAO5XaBD");
+
+            if(!connection.isClosed())
+                System.out.println("Successfully connected to " +
+                        "MySQL server using TCP/IP...");
+        } catch(Exception e) {
+            System.err.println("Exception: " + e.getMessage());
+            System.out.println("Successfully connected to " +
+                    "MySQL server using TCP/IP...");
+        } finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            } catch(SQLException e) {}
+        }
         databaseAccess = new DatabaseAccess();
     }
 
@@ -56,6 +83,62 @@ public class DatabaseAccess {
     public void setUser(User user) {
         this.user = user;
     }
+
+    /**
+     * returns the user with the given username in the system if one exists
+     * Null otherwise
+     * @param username the username of the User that will be returned
+     * @return User the user that matches the given username
+     */
+    public User getUserByUserName(String username) {
+        try {
+
+            String query = "SELECT USERS.username, USERS.password, USERS.type, " +
+                    "STUDENTS.GTechEmail, STUDENTS.majorName, STUDENTS.year" +
+                    "FROM USERS " +
+                    "JOIN STUDENTS " +
+                    "WHERE USERS.username = ?";
+            Statement statement
+                    = connection.createStatement();
+
+            ResultSet statementResults      = statement.executeQuery(query);
+            ArrayList<User> results    = new ArrayList<User>();
+
+            while (statementResults.next()) {
+
+                User user = new User(
+                        statementResults.getString(0),
+                        statementResults.getString(1),
+                        statementResults.getString(2),
+                        statementResults.getString(3),
+                        statementResults.getInt(4),
+                        statementResults.getInt(6)
+                );
+                results.add(user);
+
+            }
+
+            // going to assume that there is only 1 User in the results set
+            // since the username column in the database is unique
+            if (results.size() > 0) {
+                return results.get(0);
+            } else {
+                return null;
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println("Could not connect to the database: "
+                    + e.getMessage());
+            System.exit(0);
+
+        }
+
+        // this is needed for compilation
+        // execution should never reach this line
+        return null;
+    }
+
 
     /**
      * Insert new user into database

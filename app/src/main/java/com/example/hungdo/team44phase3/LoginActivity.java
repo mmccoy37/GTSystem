@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
             String unamestr = uname.getText().toString();
             String passwordstr = password.getText().toString();
 
-            User u = data.getUserByUsername(unamestr);
+            User u = data.getUserByUserName(unamestr);
             if (unamestr.equals("") || passwordstr.equals("")) {
                 Toast error = Toast.makeText(this, "Missing information!", Toast.LENGTH_SHORT);
                 error.show();
