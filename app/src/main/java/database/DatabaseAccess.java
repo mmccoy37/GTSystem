@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.Settings;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -29,25 +31,6 @@ public class DatabaseAccess {
      * Call only once for setup Facade class
      */
     public static void Initialize() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            connection = DriverManager.getConnection("jdbc:mysql://academicmysql.cc.gatech.edu/cs4400_Team_44",
-                    "cs4400_Team_44",
-                    "eAO5XaBD");
-
-            if(!connection.isClosed())
-                System.out.println("Successfully connected to " +
-                        "MySQL server using TCP/IP...");
-        } catch(Exception e) {
-            System.err.println("Exception: " + e.getMessage());
-            System.out.println("Successfully connected to " +
-                    "MySQL server using TCP/IP...");
-        } finally {
-            try {
-                if(connection != null)
-                    connection.close();
-            } catch(SQLException e) {}
-        }
         databaseAccess = new DatabaseAccess();
     }
 
@@ -58,6 +41,10 @@ public class DatabaseAccess {
     public void setContext(Context context) {
         dh = new DatabaseHelper(context);
         db = dh.getDb();
+    }
+
+    public void setConnection(Connection c) {
+        connection = c;
     }
 
     /**
@@ -94,13 +81,14 @@ public class DatabaseAccess {
         try {
 
             String query = "SELECT USERS.username, USERS.password, USERS.type, " +
-                    "STUDENTS.GTechEmail, STUDENTS.majorName, STUDENTS.year" +
+                    "STUDENTS.GTechEmail, STUDENTS.majorName, STUDENTS.year " +
                     "FROM USERS " +
                     "JOIN STUDENTS " +
                     "WHERE USERS.username = ?";
             Statement statement
                     = connection.createStatement();
 
+            System.out.print("Test here !!!!!!!!!!!!!!!!!");
             ResultSet statementResults      = statement.executeQuery(query);
             ArrayList<User> results    = new ArrayList<User>();
 
