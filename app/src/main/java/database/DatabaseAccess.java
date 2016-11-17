@@ -80,45 +80,37 @@ public class DatabaseAccess {
     public User getUserByUserName(String username) {
         try {
 
-            String query = "SELECT USERS.username, USERS.password, USERS.type, " +
-                    "STUDENTS.GTechEmail, STUDENTS.majorName, STUDENTS.year " +
+            String query = "SELECT USERS.username, USERS.password, " +
+                    "STUDENTS.GTechEmail, STUDENTS.majorName, STUDENTS.year, USERS.type " +
                     "FROM USERS " +
-                    "JOIN STUDENTS " +
-                    "WHERE USERS.username = ?";
+                    "JOIN STUDENTS";
             Statement statement
                     = connection.createStatement();
 
-            System.out.print("Test here !!!!!!!!!!!!!!!!!");
             ResultSet statementResults      = statement.executeQuery(query);
-            ArrayList<User> results    = new ArrayList<User>();
 
             while (statementResults.next()) {
-
-                User user = new User(
-                        statementResults.getString(0),
-                        statementResults.getString(1),
-                        statementResults.getString(2),
-                        statementResults.getString(3),
-                        statementResults.getInt(4),
-                        statementResults.getInt(6)
-                );
-                results.add(user);
+                if (username.equals(statementResults.getString(1))) {
+                    User user = new User(
+                            statementResults.getString(1),
+                            statementResults.getString(2),
+                            statementResults.getString(3),
+                            statementResults.getString(4),
+                            statementResults.getInt(5),
+                            statementResults.getInt(6)
+                    );
+                    return user;
+                }
 
             }
 
-            // going to assume that there is only 1 User in the results set
-            // since the username column in the database is unique
-            if (results.size() > 0) {
-                return results.get(0);
-            } else {
-                return null;
-            }
+            return null;
 
         } catch (SQLException e) {
 
             System.out.println("Could not connect to the database: "
                     + e.getMessage());
-            System.exit(0);
+
 
         }
 
