@@ -1,8 +1,10 @@
 package database;
 
 import android.content.Context;
+import android.os.AsyncTask;
 
 import java.sql.Connection;;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,8 +38,8 @@ public class DatabaseAccess {
         this.context = context;
     }
 
-    public void setConnection(Connection c) {
-        connection = c;
+    public void setConnection() {
+        new PostTask().execute();
     }
 
     public Context getContext() {
@@ -164,6 +166,50 @@ public class DatabaseAccess {
                 throw new NonUniqueEmailException();
 
             }
+        }
+    }
+
+
+    /**
+     * Class to run under background to connect to database
+     */
+    private class PostTask extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            System.out.println("PreExecute");
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
+                connection = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Team_44",
+                        "cs4400_Team_44",
+                        "eAO5XaBD");
+
+                if(!connection.isClosed())
+                    System.out.println("Successfully connected to " +
+                            "MySQL server using TCP/IP...");
+            } catch(Exception e) {
+                System.err.println("Exception: " + e.getMessage());
+                System.out.println("Successfully connected to " +
+                        "MySQL server using TCP/IP...");
+            }
+            return "All Done!";
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            System.out.println("Doing");
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            System.out.println("Finished");
         }
     }
 
