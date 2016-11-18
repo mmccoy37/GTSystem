@@ -6,18 +6,15 @@ import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 import database.DatabaseAccess;
 import model.User;
@@ -28,7 +25,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextView reg;
     private EditText uname;
     private EditText password;
-    private Button loginBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         reg.setPaintFlags(reg.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
         uname = (EditText) findViewById(R.id.uName);
         password = (EditText) findViewById(R.id.password);
-        loginBtn = (Button) findViewById(R.id.login);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);

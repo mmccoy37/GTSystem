@@ -119,7 +119,25 @@ public class DatabaseAccess {
      * @param user new user
      */
     public void createUser(User user) {
-        //TODO: INSERT NEW USER INTO DATABASE HERE
+        String usename = user.getUsername();
+        String password = user.getPassword();
+        String email = user.getEmail();
+        String major = user.getMajor();
+        int year = user.getYear();
+        try {
+            String query = "INSERT INTO `USERS` (" +
+                    "`Username`, " +
+                    "`Password`, " +
+                    "`Type`) " +
+                    "VALUES ('" + usename +
+                    "', '" + password + "', '0'" +
+                    ");";
+            Statement statement
+                    = connection.createStatement();
+            statement.execute(query);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }
