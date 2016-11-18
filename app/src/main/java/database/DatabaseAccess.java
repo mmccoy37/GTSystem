@@ -84,7 +84,8 @@ public class DatabaseAccess {
             String query = "SELECT U.username, U.password, " +
                     "S.GTechEmail, S.majorName, S.year, U.type " +
                     "FROM USERS AS U " +
-                    "JOIN STUDENTS AS S " +
+                    "LEFT JOIN STUDENTS AS S " +
+                    "ON U.Username=S.Username " +
                     "WHERE U.username='" + username + "';";
             Statement statement = connection.createStatement();
 
