@@ -5,7 +5,7 @@ package exception;
  */
 
 public class NonUniqueEmailException extends Exception {
-    public NonUniqueEmailException(String message) {
-        super(message);
+    public NonUniqueEmailException() {
+        super("Attempted to create a user with a username that was taken");
     }
 }
