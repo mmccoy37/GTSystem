@@ -79,7 +79,7 @@ public class DatabaseAccess {
     public User getUserByUserName(String username) {
         try {
 
-            String query = "SELECT USERS.username, USERS.password, " +
+            String query = "SELECT DISTINCT USERS.username, USERS.password, " +
                     "STUDENTS.GTechEmail, STUDENTS.majorName, STUDENTS.year, USERS.type " +
                     "FROM USERS " +
                     "JOIN STUDENTS";
@@ -125,10 +125,10 @@ public class DatabaseAccess {
         String major = user.getMajor();
         int year = user.getYear();
         try {
-            String query = "INSERT INTO `USERS` (" +
-                    "`Username`, " +
-                    "`Password`, " +
-                    "`Type`) " +
+            String query = "INSERT INTO USERS (" +
+                    "Username, " +
+                    "Password, " +
+                    "Type) " +
                     "VALUES ('" + usename +
                     "', '" + password + "', '0'" +
                     ");";
