@@ -125,8 +125,7 @@ public class DatabaseAccess {
         int year = user.getYear();
         User u = getUserByUserName(user.getUsername());
         if (u != null) {
-            throw new NonUniqueUserNameException("Attempted to create "
-                    + "a user with a username that was taken");
+            throw new NonUniqueUserNameException();
         } else {
             try {
                 String query = "INSERT INTO USERS (" +
@@ -161,8 +160,7 @@ public class DatabaseAccess {
                 } catch (SQLException s) {
                     System.out.println(s.getMessage());
                 }
-                throw new NonUniqueEmailException("Attempted to create "
-                        + "a user with a username that was taken");
+                throw new NonUniqueEmailException();
 
             }
         }
