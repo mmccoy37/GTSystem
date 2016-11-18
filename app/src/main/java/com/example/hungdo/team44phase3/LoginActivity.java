@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         DatabaseAccess.Initialize();
         data = DatabaseAccess.getDatabaseAccess();
+        data.setConnection();
         data.setContext(this);
 
         reg = (TextView) findViewById(R.id.btnRegister);
@@ -42,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        new PostTask().execute("Try something");
 
     }
 
@@ -96,50 +96,6 @@ public class LoginActivity extends AppCompatActivity {
         // When Register was clicked
         if (v.getId() == R.id.btnRegister) {
             startActivity(new Intent(this, Signup.class));
-        }
-    }
-
-
-    private class PostTask extends AsyncTask<String, Integer, String> {
-
-        private Connection connection;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            System.out.println("PreExecute");
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver").newInstance();
-                connection = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Team_44",
-                        "cs4400_Team_44",
-                        "eAO5XaBD");
-
-                if(!connection.isClosed())
-                    System.out.println("Successfully connected to " +
-                            "MySQL server using TCP/IP...");
-                data.setConnection(connection);
-            } catch(Exception e) {
-                System.err.println("Exception: " + e.getMessage());
-                System.out.println("Successfully connected to " +
-                        "MySQL server using TCP/IP...");
-            }
-            return "All Done!";
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-            System.out.println("Doing");
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            System.out.println("Finished");
         }
     }
 }
