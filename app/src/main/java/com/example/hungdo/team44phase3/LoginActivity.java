@@ -1,11 +1,13 @@
 package com.example.hungdo.team44phase3;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -43,11 +45,9 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn = (Button) findViewById(R.id.login);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
         StrictMode.setThreadPolicy(policy);
         new PostTask().execute("Try something");
 
-        // data.deleteAllData();
     }
 
     public void onClick(View v) {
@@ -55,19 +55,34 @@ public class LoginActivity extends AppCompatActivity {
             String unamestr = uname.getText().toString();
             String passwordstr = password.getText().toString();
 
-            User u = data.getUserByUserName(unamestr);
-            if (unamestr.equals("") || passwordstr.equals("")) {
-                Toast error = Toast.makeText(this, "Missing information!", Toast.LENGTH_SHORT);
-                error.show();
-            } else if (u == null) {
-                Toast error = Toast.makeText(this, "Username is invalid!", Toast.LENGTH_SHORT);
-                error.show();
-            } else if (!passwordstr.equals(u.getPassword())) {
-                Toast error = Toast.makeText(this, "Password is incorrect!", Toast.LENGTH_SHORT);
-                error.show();
+            if (data.getConnection() == null) {
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                alertDialog.setTitle("WARNING");
+                alertDialog.setMessage("Cannot connect to database!\n" +
+                        "1. Make sure that you are in campus\n" +
+                        "2. Make sure that you are connecting to the internet");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
             } else {
-                data.setUser(u);
-                startActivity(new Intent(this, UserScreen.class));
+                User u = data.getUserByUserName(unamestr);
+                if (unamestr.equals("") || passwordstr.equals("")) {
+                    Toast error = Toast.makeText(this, "Missing information!", Toast.LENGTH_SHORT);
+                    error.show();
+                } else if (u == null) {
+                    Toast error = Toast.makeText(this, "Username is invalid!", Toast.LENGTH_SHORT);
+                    error.show();
+                } else if (!passwordstr.equals(u.getPassword())) {
+                    Toast error = Toast.makeText(this, "Password is incorrect!", Toast.LENGTH_SHORT);
+                    error.show();
+                } else {
+                    data.setUser(u);
+                    startActivity(new Intent(this, UserScreen.class));
+                }
             }
         }
         if (v.getId() == R.id.btnRegister) {
