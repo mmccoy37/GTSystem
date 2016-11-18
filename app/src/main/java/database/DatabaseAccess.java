@@ -79,35 +79,32 @@ public class DatabaseAccess {
     public User getUserByUserName(String username) {
         try {
 
-            String query = "SELECT DISTINCT USERS.username, USERS.password, " +
-                    "STUDENTS.GTechEmail, STUDENTS.majorName, STUDENTS.year, USERS.type " +
-                    "FROM USERS " +
-                    "JOIN STUDENTS";
-            Statement statement
-                    = connection.createStatement();
+            String query = "SELECT DISTINCT U.username, U.password, " +
+                    "S.GTechEmail, S.majorName, S.year, U.type " +
+                    "FROM USERS AS U " +
+                    "JOIN STUDENTS AS S " +
+                    "WHERE U.username='" + username + "'";
+            Statement statement = connection.createStatement();
 
             ResultSet statementResults = statement.executeQuery(query);
 
-            while (statementResults.next()) {
-                if (username.equals(statementResults.getString(1))) {
-                    User user = new User(
-                            statementResults.getString(1),
-                            statementResults.getString(2),
-                            statementResults.getString(3),
-                            statementResults.getString(4),
-                            statementResults.getInt(5),
-                            statementResults.getInt(6)
-                    );
-                    return user;
-                }
+            if (statementResults.next()) {
+                User user = new User(
+                        statementResults.getString(1),
+                        statementResults.getString(2),
+                        statementResults.getString(3),
+                        statementResults.getString(4),
+                        statementResults.getInt(5),
+                        statementResults.getInt(6)
+                );
+                return user;
             }
 
             return null;
 
         } catch (SQLException e) {
 
-            System.out.println("Could not connect to the database: "
-                    + e.getMessage());
+            System.out.println("Could not connect to the database: " + e.getMessage());
         }
 
         return null;
