@@ -1,6 +1,8 @@
 package com.example.hungdo.team44phase3;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,6 +17,8 @@ import java.util.List;
 
 import database.DatabaseAccess;
 
+import exception.NonUniqueEmailException;
+import exception.NonUniqueUserNameException;
 import model.User;
 
 public class Signup extends AppCompatActivity {
@@ -110,12 +114,30 @@ public class Signup extends AppCompatActivity {
                 try {
                     User newUser = new User(unamestr, pass1str, emailstr
                             + gatechEmailstr, majorstr, year);
-                    data.createUser(newUser);
-                    Toast toast = Toast.makeText(this, "Account was created!", Toast.LENGTH_SHORT);
+                    if (data.getConnection() == null) {
+                        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                        alertDialog.setTitle("WARNING");
+                        alertDialog.setMessage("Cannot connect to database!\n" +
+                                "1. Make sure that you are in campus\n" +
+                                "2. Make sure that you are connecting to the internet");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    } else {
+                        data.createUser(newUser);
+                        Toast toast = Toast.makeText(this, "Account was created!", Toast.LENGTH_SHORT);
+                        toast.show();
+                        finish();
+                    }
+                } catch (NonUniqueUserNameException u) {
+                    Toast toast = Toast.makeText(this, "Username is already exist", Toast.LENGTH_SHORT);
                     toast.show();
-                    finish();
-                } catch (Exception e) {
-                    Toast toast = Toast.makeText(this, "Email or username is already exist", Toast.LENGTH_SHORT);
+                } catch (NonUniqueEmailException e) {
+                    Toast toast = Toast.makeText(this, "Email is already exist", Toast.LENGTH_SHORT);
                     toast.show();
                 }
             }
