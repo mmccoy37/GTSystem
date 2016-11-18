@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import exception.NonUniqueEmailException;
+import exception.NonUniqueUserNameException;
 import model.User;
 
 /**
@@ -83,7 +85,7 @@ public class DatabaseAccess {
                     "S.GTechEmail, S.majorName, S.year, U.type " +
                     "FROM USERS AS U " +
                     "JOIN STUDENTS AS S " +
-                    "WHERE U.username='" + username + "'";
+                    "WHERE U.username='" + username + "';";
             Statement statement = connection.createStatement();
 
             ResultSet statementResults = statement.executeQuery(query);
@@ -115,25 +117,54 @@ public class DatabaseAccess {
      * Insert new user into database
      * @param user new user
      */
-    public void createUser(User user) {
+    public void createUser(User user) throws NonUniqueUserNameException, NonUniqueEmailException {
         String usename = user.getUsername();
         String password = user.getPassword();
         String email = user.getEmail();
         String major = user.getMajor();
         int year = user.getYear();
-        try {
-            String query = "INSERT INTO USERS (" +
-                    "Username, " +
-                    "Password, " +
-                    "Type) " +
-                    "VALUES ('" + usename +
-                    "', '" + password + "', '0'" +
-                    ");";
-            Statement statement
-                    = connection.createStatement();
-            statement.execute(query);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        User u = getUserByUserName(user.getUsername());
+        if (u != null) {
+            throw new NonUniqueUserNameException("Attempted to create "
+                    + "a user with a username that was taken");
+        } else {
+            try {
+                String query = "INSERT INTO USERS (" +
+                        "Username, " +
+                        "Password, " +
+                        "Type) " +
+                        "VALUES ('" + usename +
+                        "', '" + password + "', '0'" +
+                        ");";
+                Statement statement = connection.createStatement();
+                statement.execute(query);
+                query = "INSERT INTO STUDENTS (" +
+                        "GTechEmail, " +
+                        "Username, " +
+                        "MajorName, " +
+                        "Year) " +
+                        "VALUES (" +
+                        "'" + email + "', " +
+                        "'" + usename + "', " +
+                        "'" + major + "', " +
+                        "'" + year + "'" +
+                        ");";
+                statement = connection.createStatement();
+                statement.execute(query);
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+                try {
+                    String query = "DELETE FROM USERS " +
+                            "WHERE Username = '" + usename + "';";
+                    Statement statement = connection.createStatement();
+                    statement.execute(query);
+                } catch (SQLException s) {
+                    System.out.println(s.getMessage());
+                }
+                throw new NonUniqueEmailException("Attempted to create "
+                        + "a user with a username that was taken");
+
+            }
         }
     }
 
