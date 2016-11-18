@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -79,13 +80,17 @@ public class Signup extends AppCompatActivity {
 
     }
 
+    /**
+     * Make action when click
+     * @param v the object on screen
+     */
     public void onClick(View v) {
         if (v.getId() == R.id.btnCreate) {
             String emailstr = email.getText().toString();
             String unamestr = uname.getText().toString();
             String pass1str = pass1.getText().toString();
             String pass2str = pass2.getText().toString();
-            String gatechEmailstr = gatechEmail.getText().toString();
+            String gatechEmailstr = emailstr + gatechEmail.getText().toString();
             int year = 0;
             String yearstr = spinnerYear.getSelectedItem().toString();
             String majorstr = spinnerMajor.getSelectedItem().toString();
@@ -99,9 +104,13 @@ public class Signup extends AppCompatActivity {
                 year = 4;
             }
 
+            // Check conditions
             if (yearstr.equals("YEAR") || majorstr.equals("MAJOR") || emailstr.equals("")
                     || unamestr.equals("") || pass1str.equals("") || pass2str.equals("")) {
                 Toast pass = Toast.makeText(this, "Some information are missing!", Toast.LENGTH_SHORT);
+                pass.show();
+            } else if (!isValidEmail(gatechEmailstr)) {
+                Toast pass = Toast.makeText(this, "Email is Invalid!", Toast.LENGTH_SHORT);
                 pass.show();
             } else if (pass1str.length() < 8 || pass2str.length() < 8) {
                 Toast pass = Toast.makeText(this, "Passwords must have 8 or more characters"
@@ -114,6 +123,7 @@ public class Signup extends AppCompatActivity {
                 try {
                     User newUser = new User(unamestr, pass1str, emailstr
                             + gatechEmailstr, majorstr, year);
+                    // Check database connection before execute
                     if (data.getConnection() == null) {
                         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
                         alertDialog.setTitle("WARNING");
@@ -128,6 +138,7 @@ public class Signup extends AppCompatActivity {
                                 });
                         alertDialog.show();
                     } else {
+                        // Database connect successfully and all conditions are passed then execute
                         data.createUser(newUser);
                         Toast toast = Toast.makeText(this, "Account was created!", Toast.LENGTH_SHORT);
                         toast.show();
@@ -142,5 +153,15 @@ public class Signup extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    /**
+     * Check input is mail is right format or not
+     * @param target the input
+     * @return
+     */
+    public boolean isValidEmail(CharSequence target) {
+        return target != null && !TextUtils.isEmpty(target)
+                && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 }

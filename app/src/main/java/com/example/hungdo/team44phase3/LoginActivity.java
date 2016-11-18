@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import database.DatabaseAccess;
+import model.AccountType;
 import model.User;
 
 public class LoginActivity extends AppCompatActivity {
@@ -45,11 +46,17 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Make action when click
+     * @param v the object on screen
+     */
     public void onClick(View v) {
+        // When login button was clicked
         if (v.getId() == R.id.login) {
             String unamestr = uname.getText().toString();
             String passwordstr = password.getText().toString();
 
+            // Check database connection
             if (data.getConnection() == null) {
                 AlertDialog alertDialog = new AlertDialog.Builder(this).create();
                 alertDialog.setTitle("WARNING");
@@ -64,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                         });
                 alertDialog.show();
             } else {
+                // Database connect successfully then check conditions
                 User u = data.getUserByUserName(unamestr);
                 if (unamestr.equals("") || passwordstr.equals("")) {
                     Toast error = Toast.makeText(this, "Missing information!", Toast.LENGTH_SHORT);
@@ -76,10 +84,16 @@ public class LoginActivity extends AppCompatActivity {
                     error.show();
                 } else {
                     data.setUser(u);
-                    startActivity(new Intent(this, UserScreen.class));
+                    if (u.getAccountType().equals(AccountType.STUDENT)) {
+                        startActivity(new Intent(this, UserScreen.class));
+                    } else {
+                        startActivity(new Intent(this, AdminScreen.class));
+                    }
                 }
             }
         }
+
+        // When Register was clicked
         if (v.getId() == R.id.btnRegister) {
             startActivity(new Intent(this, Signup.class));
         }
@@ -88,13 +102,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private class PostTask extends AsyncTask<String, Integer, String> {
 
+        private Connection connection;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             System.out.println("PreExecute");
         }
 
-        private Connection connection;
         @Override
         protected String doInBackground(String... params) {
             try {

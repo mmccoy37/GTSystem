@@ -81,7 +81,7 @@ public class DatabaseAccess {
     public User getUserByUserName(String username) {
         try {
 
-            String query = "SELECT DISTINCT U.username, U.password, " +
+            String query = "SELECT U.username, U.password, " +
                     "S.GTechEmail, S.majorName, S.year, U.type " +
                     "FROM USERS AS U " +
                     "JOIN STUDENTS AS S " +

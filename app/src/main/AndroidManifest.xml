@@ -35,7 +35,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ProfileActivity"
-            android:label="Profile"></activity>
+            android:label="Profile" />
+        <activity
+            android:name=".AdminScreen"
+            android:label="Admin"></activity>
     </application>
 
 </manifest>
