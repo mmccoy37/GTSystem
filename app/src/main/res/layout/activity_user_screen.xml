@@ -36,10 +36,10 @@
                 android:onClick="onClick" />
 
             <Button
-                android:text="Apply Filter"
+                android:text="Apply Filter (Search)"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/button"
+                android:id="@+id/button_search"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp" />
@@ -74,7 +74,7 @@
                 android:layout_marginLeft="10dp"
                 android:textStyle="normal|bold" />
 
-            <model.MultiSelectionSpinner
+            <Spinner
                 android:layout_width="match_parent"
                 android:id="@+id/spinnerCat"
                 android:layout_height="40dp" />
@@ -139,7 +139,7 @@
                         android:id="@+id/textView6" />
 
                     <Spinner
-                        android:layout_width="match_parent"
+                        android:layout_width="99dp"
                         android:id="@+id/spinnerYear"
                         android:layout_height="40dp" />
                 </LinearLayout>
@@ -151,7 +151,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:id="@+id/radio_group_1">
 
             <RadioButton
                 android:text="Project"
