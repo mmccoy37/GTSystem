@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -34,6 +36,7 @@ public class UserScreen extends Activity {
             "point something"
     };
     ArrayAdapter<String> adapter;
+    ImageButton profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,16 +101,19 @@ public class UserScreen extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerYear.setAdapter(adapter);
 
+
+        //start new activity upon clicking btnMe button
+        profile = (ImageButton) findViewById(R.id.btnMe);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //navigate to new activity
+                Intent showInfo = new Intent(UserScreen.this, ProfileActivity.class);
+                UserScreen.this.startActivity(showInfo);
+            }
+        });
+
     }
 
-    /**
-     * Action when the item is clicked
-     * @param v View on screen
-     */
-    public void onClick(View v) {
-        // If button me is clicked
-        if (v.getId() == R.id.btnMe) {
-            startActivity(new Intent(this, ProfileActivity.class));
-        }
-    }
+
 }

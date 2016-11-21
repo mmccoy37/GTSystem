@@ -8,6 +8,92 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.hungdo.team44phase3.ProfileActivity">
+    tools:context="com.example.hungdo.team44phase3.ProfileActivity"
+    android:background="@android:color/holo_green_light"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@android:color/white"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/uNameBox"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:contextClickable="false"
+            android:textAlignment="center"
+            android:textSize="35sp"
+            android:text="ME"
+            android:textColor="@android:color/holo_green_dark"/>
+
+
+        <Button
+            android:text="Edit Profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editProfileBtn"
+            android:background="@drawable/button_background"
+            android:textColorLink="@android:color/background_light"
+            android:textColorHint="@android:color/holo_orange_dark"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="100dp"
+            android:cursorVisible="false"
+            android:onClick="onClick"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:textCursorDrawable="@android:drawable/alert_light_frame" />
+
+        <Button
+            android:text="My Application"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/myAppBtn"
+            android:background="@drawable/button_background"
+            android:textColorLink="@android:color/background_light"
+            android:textColorHint="@android:color/holo_orange_dark"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:cursorVisible="false"
+            android:onClick="onClick"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:textCursorDrawable="@android:drawable/alert_light_frame" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/back"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:linksClickable="true"
+            android:onClick="onClick"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:text="Back"
+            android:textColor="@android:color/holo_orange_light"/>
+
+
+    </LinearLayout>
+
 
 </RelativeLayout>

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLOutput;
 
 import database.DatabaseAccess;
 import model.AccountType;
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
             String unamestr = uname.getText().toString();
             String passwordstr = password.getText().toString();
 
+
             // Check database connection
             if (data.getConnection() == null) {
                 AlertDialog alertDialog = new AlertDialog.Builder(this).create();
@@ -89,6 +91,8 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         startActivity(new Intent(this, AdminScreen.class));
                     }
+
+
                 }
             }
         }
