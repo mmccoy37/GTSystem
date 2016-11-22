@@ -1,5 +1,6 @@
 package com.example.hungdo.team44phase3;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ public class AdminScreen extends AppCompatActivity {
     public void onClick(View v) {
         if (v.getId() == R.id.btnViewApp) {
             //TODO: Navigate to new Activitive
+            startActivity(new Intent(this, EditProfile.class));
         }
         if (v.getId() == R.id.btnViewPopularApp) {
             //TODO: Navigate to new Activitive

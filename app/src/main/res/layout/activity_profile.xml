@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_profile"
+    android:id="@+id/activity_admin_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -9,91 +10,58 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.hungdo.team44phase3.ProfileActivity"
-    android:background="@android:color/holo_green_light"
-    android:orientation="vertical">
-
+    android:background="#EDE3CE">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@android:color/white"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+        android:layout_height="match_parent">
 
-        <TextView
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:id="@+id/uNameBox"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:contextClickable="false"
-            android:textAlignment="center"
-            android:textSize="35sp"
-            android:text="ME"
-            android:textColor="@android:color/holo_green_dark"/>
+            app:srcCompat="@mipmap/ic_launcher"
+            android:id="@+id/imageView"
+            android:layout_weight="0.79"
+            android:layout_height="500dp"
+            android:layout_marginTop="30dp" />
 
-
-        <Button
-            android:text="Edit Profile"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editProfileBtn"
-            android:background="@drawable/button_background"
-            android:textColorLink="@android:color/background_light"
-            android:textColorHint="@android:color/holo_orange_dark"
-            android:textColor="@android:color/background_light"
-            android:textSize="18sp"
-            android:textStyle="normal|bold"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="100dp"
-            android:cursorVisible="false"
-            android:onClick="onClick"
-            android:textAppearance="@style/TextAppearance.AppCompat.Button"
-            android:textCursorDrawable="@android:drawable/alert_light_frame" />
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_vertical"
+            android:weightSum="1"
+            android:layout_weight="0.79">
 
-        <Button
-            android:text="My Application"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/myAppBtn"
-            android:background="@drawable/button_background"
-            android:textColorLink="@android:color/background_light"
-            android:textColorHint="@android:color/holo_orange_dark"
-            android:textColor="@android:color/background_light"
-            android:textSize="18sp"
-            android:textStyle="normal|bold"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:cursorVisible="false"
-            android:onClick="onClick"
-            android:textAppearance="@style/TextAppearance.AppCompat.Button"
-            android:textCursorDrawable="@android:drawable/alert_light_frame" />
+            <TextView
+                android:text="Edit Profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnEdit"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:textSize="25sp"
+                style="@android:style/Widget.DeviceDefault.Light.TextView.SpinnerItem"
+                android:textColor="@drawable/text_color"
+                android:linksClickable="true"
+                android:onClick="onClick" />
 
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:id="@+id/back"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:linksClickable="true"
-            android:onClick="onClick"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:text="Back"
-            android:textColor="@android:color/holo_orange_light"/>
-
+            <TextView
+                android:text="My Application"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnMyApplication"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:textSize="25sp"
+                style="@android:style/Widget.DeviceDefault.Light.TextView.SpinnerItem"
+                android:textColor="@drawable/text_color"
+                android:linksClickable="true"
+                android:onClick="onClick" />
+        </LinearLayout>
 
     </LinearLayout>
-
 
 </RelativeLayout>

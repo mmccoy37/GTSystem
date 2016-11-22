@@ -1,5 +1,6 @@
 package com.example.hungdo.team44phase3;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
@@ -19,7 +20,7 @@ import model.MultiSelectionSpinner;
 
 
 
-public class editProfileActivity extends AppCompatActivity {
+public class EditProfile extends Activity {
 
     private Spinner spinnerMajor;
     private Spinner spinnerYear;
@@ -37,7 +38,7 @@ public class editProfileActivity extends AppCompatActivity {
 
         spinnerMajor = (Spinner) findViewById(R.id.spinnerMajor);
         List<String> list = new ArrayList<>();
-        list = new ArrayList<>();
+
         list.add("All");
         list.add("CS");
         list.add("EE");
