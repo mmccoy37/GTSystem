@@ -99,6 +99,7 @@ public class UserScreen extends Activity {
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //spinnerCat.setAdapter(adapter);
         spinnerCat.setItems(data.getCategories());
+        spinnerCat.setSelectALL();
         spinnerCat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

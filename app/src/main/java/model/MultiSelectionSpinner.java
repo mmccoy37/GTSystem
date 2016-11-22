@@ -66,6 +66,17 @@ public class MultiSelectionSpinner extends Spinner implements
                 simple_adapter.add(buildSelectedItemString());
             }
 
+            boolean all = true;
+            for (int i = 0; i < mSelection.length; i++) {
+                if (mSelection[i] == false) {
+                    all = false;
+                }
+            }
+            if (all == true) {
+                simple_adapter.clear();
+                simple_adapter.add("ALL");
+            }
+
         } else {
             throw new IllegalArgumentException(
                     "Argument 'which' is out of bounds.");
