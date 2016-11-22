@@ -41,15 +41,17 @@
                 android:text="Major"
                 android:layout_width="71dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="30dp"
                 android:textStyle="normal|bold"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:textColor="@android:color/holo_orange_light"/>
 
-            <model.MultiSelectionSpinner
+            <Spinner
                 android:layout_width="match_parent"
                 android:layout_marginLeft="20dp"
                 android:id="@+id/spinnerMajor"
-                android:layout_height="40dp" />
+                android:layout_height="40dp"
+                android:textAlignment="viewEnd"/>
 
         </LinearLayout>
 
@@ -64,15 +66,17 @@
                 android:text="Year"
                 android:layout_width="71dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="30dp"
                 android:textStyle="normal|bold"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:textColor="@android:color/holo_orange_light"/>
 
-            <model.MultiSelectionSpinner
+            <Spinner
                 android:layout_width="match_parent"
                 android:layout_marginLeft="20dp"
                 android:id="@+id/spinnerYear"
-                android:layout_height="40dp" />
+                android:layout_height="40dp"
+                android:textAlignment="viewEnd"/>
 
         </LinearLayout>
 
@@ -88,17 +92,31 @@
                 android:text="Department"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="30dp"
                 android:textStyle="normal|bold"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:textColor="@android:color/holo_orange_light"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_marginLeft="20dp"
+                android:text="CS"
+                android:layout_marginRight="60dp"
                 android:id="@+id/deptTxt"
-                android:layout_height="40dp" />
+                android:textStyle="normal"
+                android:textSize="18sp"
+                android:layout_height="40dp"
+                android:textAlignment="viewEnd" />
 
         </LinearLayout>
+
+        <Button
+            android:text="OK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/OKbtn"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="30dp" />
 
 
     </LinearLayout>

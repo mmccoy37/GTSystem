@@ -30,7 +30,7 @@ public class EditProfile extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_edit_myprofile);
 
         // Setup ListView
         listView = (ListView) findViewById(R.id.listview);
@@ -38,7 +38,6 @@ public class EditProfile extends Activity {
 
         spinnerMajor = (Spinner) findViewById(R.id.spinnerMajor);
         List<String> list = new ArrayList<>();
-
         list.add("All");
         list.add("CS");
         list.add("EE");
