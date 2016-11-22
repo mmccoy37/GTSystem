@@ -74,7 +74,7 @@
                 android:layout_marginLeft="10dp"
                 android:textStyle="normal|bold" />
 
-            <Spinner
+            <model.MultiSelectionSpinner
                 android:layout_width="match_parent"
                 android:id="@+id/spinnerCat"
                 android:layout_height="40dp" />

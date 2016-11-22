@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -23,7 +24,7 @@ import model.MultiSelectionSpinner;
 
 public class UserScreen extends Activity {
 
-    private Spinner spinnerCat;
+    private MultiSelectionSpinner spinnerCat;
     private Spinner spinnerDes;
     private Spinner spinnerMajor;
     private Spinner spinnerYear;
@@ -92,11 +93,12 @@ public class UserScreen extends Activity {
             }
         });
         // category spinner
-        ArrayList<String> listCat = data.getCategories();
-        spinnerCat = (Spinner) findViewById(R.id.spinnerCat);
-        ArrayAdapter<String> adapter =new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listCat);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCat.setAdapter(adapter);
+        //ArrayList<String> listCat = data.getCategories();
+        spinnerCat = (MultiSelectionSpinner) findViewById(R.id.spinnerCat);
+        //ArrayAdapter<String> adapter =new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listCat);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //spinnerCat.setAdapter(adapter);
+        spinnerCat.setItems(data.getCategories());
         spinnerCat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -173,6 +175,14 @@ public class UserScreen extends Activity {
                                 data.getMainPageResults(TITLE, CATEGORY, DESIGNATION, MAJOR, YEAR, TYPE)));
             }
         });
+
+        ImageButton profButton = (ImageButton) findViewById(R.id.btnMe);
+        profButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, ProfileActivity.class));
+            }
+        });
     }
 
     /**
@@ -181,8 +191,8 @@ public class UserScreen extends Activity {
      */
     public void onClick(View v) {
         // If button me is clicked
-        if (v.getId() == R.id.btnMe) {
-            startActivity(new Intent(this, ProfileActivity.class));
-        }
+        //if (v.getId() == R.id.btnMe) {
+        //    startActivity(new Intent(this, ProfileActivity.class));
+        //}
     }
 }

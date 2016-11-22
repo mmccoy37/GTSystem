@@ -90,11 +90,11 @@ public class MultiSelectionSpinner extends Spinner implements
         return true;
     }
 
-    @Override
-    public void setAdapter(SpinnerAdapter adapter) {
-        throw new RuntimeException(
-                "setAdapter is not supported by MultiSelectSpinner.");
-    }
+    //@Override
+    //public void setAdapter(SpinnerAdapter adapter) {
+    //    throw new RuntimeException(
+    //            "setAdapter is not supported by MultiSelectSpinner.");
+    //}
 
     public void setItems(String[] items) {
         _items = items;
