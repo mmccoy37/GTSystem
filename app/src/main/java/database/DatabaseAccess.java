@@ -2,12 +2,16 @@ package database;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
+
+import com.example.hungdo.team44phase3.UserScreen;
 
 import java.sql.Connection;;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import exception.NonUniqueEmailException;
 import exception.NonUniqueUserNameException;
@@ -168,6 +172,126 @@ public class DatabaseAccess {
             }
         }
     }
+
+    /**
+     * get categories from db
+     * @return
+     */
+    public ArrayList<String> getCategories() {
+        ArrayList<String> categories = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM CATEGORY");
+            while (rs.next()) {
+                categories.add(rs.getString("Name"));
+            }
+        } catch (SQLException e) {
+            Log.e("QUERY", e.getMessage());
+        }
+        return categories;
+    }
+
+    /**
+     * get designations from db
+     * @return
+     */
+    public ArrayList<String> getDesignations() {
+        ArrayList<String> res = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM DESIGNATION");
+            while (rs.next()) {
+                res.add(rs.getString("Name"));
+            }
+        } catch (SQLException e) {
+            Log.e("QUERY", e.getMessage());
+        }
+        return res;
+    }
+
+    /**
+     * get majors from db
+     * @return
+     */
+    public ArrayList<String> getMajors() {
+        ArrayList<String> res = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT MajorName FROM MAJORS");
+            while (rs.next()) {
+                res.add(rs.getString("MajorName"));
+            }
+        } catch (SQLException e) {
+            Log.e("QUERY", e.getMessage());
+        }
+        return res;
+    }
+
+    /**
+     * get years from database
+     * @return
+     */
+    public ArrayList<String> getYears() {
+        ArrayList<String> res = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT DISTINCT Year FROM STUDENTS");
+            while (rs.next()) {
+                res.add(rs.getString("Year"));
+            }
+        } catch (SQLException e) {
+            Log.e("QUERY", e.getMessage());
+        }
+        return res;
+    }
+
+    public ArrayList<String> getMainPageResults(String Title, String Category, String Designation,
+                                                String Major, String Year, int Type) {
+        //TODO: THIS IS BROKEN. AKA MUST FIX ONCE WE DO OUR SQL QUERIES FOR PHASE 3
+        ArrayList<String> res = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = null;
+            if (Type == UserScreen.TYPE_IS_BOTH) {
+                rs = statement.executeQuery("SELECT DISTINCT * FROM COURSE,PROJECTS");
+                while (rs.next()) {
+                    res.add(rs.getString("CourseName") + rs.getString("PName"));
+                }
+            } else if (Type == UserScreen.TYPE_IS_COURSE) {
+                rs = statement.executeQuery("SELECT DISTINCT * FROM COURSE");
+                while (rs.next()) {
+                    res.add(rs.getString("CourseName"));
+                }
+            } else if (Type == UserScreen.TYPE_IS_PROJECT) {
+                rs = statement.executeQuery("SELECT DISTINCT * FROM PROJECTS");
+                while (rs.next()) {
+                    res.add(rs.getString("PName"));
+                }
+            }
+            Log.d("QUERY", "MainPage query results: " + res.toString());
+        } catch (SQLException e) {
+            Log.e("QUERY", e.getMessage());
+        }
+        return res;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**

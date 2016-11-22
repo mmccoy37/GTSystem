@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
     }
 
     /**
@@ -91,8 +90,6 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         startActivity(new Intent(this, AdminScreen.class));
                     }
-
-
                 }
             }
         }
