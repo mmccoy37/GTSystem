@@ -42,6 +42,7 @@ public class UserScreen extends Activity {
             "point something"
     };
     ArrayAdapter<String> adapter;
+
     DatabaseAccess data;
     private String YEAR;
     private String CATEGORY;
@@ -177,6 +178,9 @@ public class UserScreen extends Activity {
             }
         });
 
+
+
+
         ImageButton profButton = (ImageButton) findViewById(R.id.btnMe);
         profButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,4 +200,6 @@ public class UserScreen extends Activity {
         //    startActivity(new Intent(this, ProfileActivity.class));
         //}
     }
+
+
 }

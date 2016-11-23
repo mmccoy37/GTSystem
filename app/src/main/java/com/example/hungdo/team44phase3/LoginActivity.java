@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLOutput;
 
 import database.DatabaseAccess;
 import model.AccountType;
@@ -43,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
     }
 
     /**
@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         if (v.getId() == R.id.login) {
             String unamestr = uname.getText().toString();
             String passwordstr = password.getText().toString();
+
 
             // Check database connection
             if (data.getConnection() == null) {
