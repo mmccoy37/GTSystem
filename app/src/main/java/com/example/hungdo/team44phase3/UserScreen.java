@@ -32,6 +32,7 @@ public class UserScreen extends Activity {
     private ListView listView;
 
     ArrayAdapter<String> adapter;
+
     DatabaseAccess data;
     private String YEAR;
     private String CATEGORY;
@@ -167,7 +168,7 @@ public class UserScreen extends Activity {
                                 data.getMainPageResults(TITLE, CATEGORY, DESIGNATION, MAJOR, YEAR, TYPE)));
             }
         });
-
+        
     }
 
     /**
@@ -180,4 +181,6 @@ public class UserScreen extends Activity {
             startActivity(new Intent(context, ProfileActivity.class));
         }
     }
+
+
 }

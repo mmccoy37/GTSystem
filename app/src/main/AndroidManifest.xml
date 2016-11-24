@@ -38,7 +38,13 @@
             android:label="Profile" />
         <activity
             android:name=".AdminScreen"
-            android:label="Admin"></activity>
+            android:label="Admin" />
+        <activity
+            android:name=".EditProfileScreen"
+            android:label="Edit Profile" />
+        <activity
+            android:name=".MyApplicationScreen"
+            android:label="My application" />
     </application>
 
 </manifest>
