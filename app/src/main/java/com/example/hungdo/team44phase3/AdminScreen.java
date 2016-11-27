@@ -29,7 +29,7 @@ public class AdminScreen extends AppCompatActivity {
             startActivity(new Intent(this, AdminViewApp.class));
         }
         if (v.getId() == R.id.btnViewPopularApp) {
-            startActivity(new Intent(this, UserScreen.class));
+            startActivity(new Intent(this, AdminPopProject.class));
         }
         if (v.getId() == R.id.btnViewAppReport) {
             startActivity(new Intent(this, UserScreen.class));
