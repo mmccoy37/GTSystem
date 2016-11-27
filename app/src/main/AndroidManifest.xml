@@ -41,10 +41,13 @@
             android:label="Admin" />
         <activity
             android:name=".EditProfileScreen"
-            android:label="Edit Profile" />
+            android:label="Edit Profile"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MyApplicationScreen"
             android:label="My application" />
+        <activity android:name=".ViewAndApplyProjectScreen" />
+        <activity android:name=".CourseInfoScreen"></activity>
     </application>
 
 </manifest>

@@ -18,11 +18,16 @@ import model.MultiSelectionSpinner;
 
 public class MyApplicationScreen extends Activity {
 
+    private ListView listMyApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myapp);
+
+        listMyApp = (ListView) findViewById(R.id.listMyApp);
+
+
     }
 
 }

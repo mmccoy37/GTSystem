@@ -21,6 +21,7 @@ import java.util.List;
 
 import database.DatabaseAccess;
 import model.MultiSelectionSpinner;
+import model.YearLevel;
 
 public class UserScreen extends Activity {
 
@@ -29,18 +30,7 @@ public class UserScreen extends Activity {
     private Spinner spinnerMajor;
     private Spinner spinnerYear;
     private ListView listView;
-    private String[] arrs = new String[]{
-            "do something",
-            "get something",
-            "create something",
-            "make something",
-            "build something",
-            "laugh something",
-            "punch something",
-            "sing something",
-            "see something",
-            "point something"
-    };
+
     ArrayAdapter<String> adapter;
 
     DatabaseAccess data;
@@ -61,7 +51,7 @@ public class UserScreen extends Activity {
         setContentView(R.layout.activity_user_screen);
         this.context = this;
         //database intitialize
-        DatabaseAccess.Initialize();
+        //DatabaseAccess.Initialize();
         data = DatabaseAccess.getDatabaseAccess();
         data.setConnection();
         data.setContext(this);
@@ -150,12 +140,13 @@ public class UserScreen extends Activity {
             }
         });
 
-        ArrayList<String> listYear = data.getYears();
+        //ArrayList<String> listYear = data.getYears();
+
         spinnerYear = (Spinner) findViewById(R.id.spinnerYear);
-        adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,listYear);
+        ArrayAdapter<YearLevel> adapterYear = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item,YearLevel.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerYear.setAdapter(adapter);
+        spinnerYear.setAdapter(adapterYear);
         spinnerYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -178,16 +169,6 @@ public class UserScreen extends Activity {
             }
         });
 
-
-
-
-        ImageButton profButton = (ImageButton) findViewById(R.id.btnMe);
-        profButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(context, ProfileActivity.class));
-            }
-        });
     }
 
     /**
@@ -196,9 +177,9 @@ public class UserScreen extends Activity {
      */
     public void onClick(View v) {
         // If button me is clicked
-        //if (v.getId() == R.id.btnMe) {
-        //    startActivity(new Intent(this, ProfileActivity.class));
-        //}
+        if (v.getId() == R.id.btnMe) {
+            startActivity(new Intent(context, ProfileActivity.class));
+        }
     }
 
 
