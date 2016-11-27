@@ -12,4 +12,5 @@
     <string name="title_activity_edit_profile">editProfileActivity</string>
     <string name="title_activity_admin_view_app">AdminViewApp</string>
     <string name="title_activity_admin_pop_project">AdminPopProject</string>
+    <string name="title_activity_admin_app_report">AdminAppReport</string>
 </resources>

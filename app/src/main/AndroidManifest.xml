@@ -55,6 +55,10 @@
         <activity
             android:name=".AdminPopProject"
             android:label="@string/title_activity_admin_pop_project"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AdminAppReport"
+            android:label="@string/title_activity_admin_app_report"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
