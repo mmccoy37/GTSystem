@@ -168,7 +168,7 @@ public class UserScreen extends Activity {
                                 data.getMainPageResults(TITLE, CATEGORY, DESIGNATION, MAJOR, YEAR, TYPE)));
             }
         });
-        
+
     }
 
     /**

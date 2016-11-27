@@ -30,25 +30,28 @@ public class EditProfileScreen extends AppCompatActivity {
 
         // Setup spinners
         spinnerMajor = (Spinner) findViewById(R.id.spinnerMajor);
-        List<String> listMajor = new ArrayList<>();
-        listMajor.add("CS");
-        listMajor.add("CM");
-        listMajor.add("EE");
-        listMajor.add("ME");
+        List<String> list = new ArrayList<>();
+        list.add("CS");
+        list.add("EE");
+        list.add("CM");
+        list.add("ME");
+        list.add("CE");
+        list.add("MATH");
+        list.add("DS");
         adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,listMajor);
+                this, android.R.layout.simple_spinner_item,list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMajor.setAdapter(adapter);
 
         // Setup spinners
         spinnerYear = (Spinner) findViewById(R.id.spinnerYear);
-        List<String> listYear = new ArrayList<>();
-        listYear.add("Cat 1");
-        listYear.add("Cat 2");
-        listYear.add("Cat 3");
-        listYear.add("Cat 4");
+        list = new ArrayList<>();
+        list.add("FRESHMAN");
+        list.add("SOPHOMORE");
+        list.add("JUNIOR");
+        list.add("SENIOR");
         adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,listYear);
+                this, android.R.layout.simple_spinner_item,list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerYear.setAdapter(adapter);
     }
