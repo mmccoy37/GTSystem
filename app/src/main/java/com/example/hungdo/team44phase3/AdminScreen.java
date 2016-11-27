@@ -26,13 +26,13 @@ public class AdminScreen extends AppCompatActivity {
 
     public void onClick(View v) {
         if (v.getId() == R.id.btnViewApp) {
-            //TODO: Navigate to new Activitive
+            startActivity(new Intent(this, AdminViewApp.class));
         }
         if (v.getId() == R.id.btnViewPopularApp) {
-            //TODO: Navigate to new Activitive
+            startActivity(new Intent(this, UserScreen.class));
         }
         if (v.getId() == R.id.btnViewAppReport) {
-            //TODO: Navigate to new Activitive
+            startActivity(new Intent(this, UserScreen.class));
         }
     }
 }

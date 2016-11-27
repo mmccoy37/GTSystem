@@ -10,4 +10,5 @@
     <string name="title_activity_signup">Signup</string>
     <string name="title_activity_dd">dd</string>
     <string name="title_activity_edit_profile">editProfileActivity</string>
+    <string name="title_activity_admin_view_app">AdminViewApp</string>
 </resources>

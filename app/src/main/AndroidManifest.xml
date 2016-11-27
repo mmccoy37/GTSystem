@@ -47,7 +47,11 @@
             android:name=".MyApplicationScreen"
             android:label="My application" />
         <activity android:name=".ViewAndApplyProjectScreen" />
-        <activity android:name=".CourseInfoScreen"></activity>
+        <activity android:name=".CourseInfoScreen" />
+        <activity
+            android:name=".AdminViewApp"
+            android:label="@string/title_activity_admin_view_app"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
