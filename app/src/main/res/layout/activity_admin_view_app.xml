@@ -51,7 +51,7 @@
         <Button
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="150dp"
+            android:layout_marginLeft="120dp"
             android:id="@+id/AcceptBtn"
             android:text="Accept" />
 

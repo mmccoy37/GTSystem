@@ -59,6 +59,10 @@
         <activity
             android:name=".AdminAppReport"
             android:label="@string/title_activity_admin_app_report"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AdminAddCourse"
+            android:label="@string/title_activity_admin_add_course"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

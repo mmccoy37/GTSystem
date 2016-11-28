@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/textView"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:paddingLeft="20dp"
+                android:paddingLeft="10dp"
                 android:layout_weight="0.39"
                 android:paddingTop="3dp" />
         </android.support.design.widget.AppBarLayout>
