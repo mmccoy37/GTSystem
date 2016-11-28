@@ -63,6 +63,10 @@
         <activity
             android:name=".AdminAddCourse"
             android:label="@string/title_activity_admin_add_course"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AdminAddProject"
+            android:label="@string/title_activity_admin_add_project"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

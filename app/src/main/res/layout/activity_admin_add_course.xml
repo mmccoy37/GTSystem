@@ -57,9 +57,9 @@
                 android:textStyle="normal|bold"/>
 
             <EditText
-                android:layout_width="108dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="numberDecimal"
                 android:ems="10"
                 android:id="@+id/editCourseNum"
                 android:background="?android:attr/actionModeBackground" />
@@ -81,7 +81,7 @@
                 android:textStyle="normal|bold"/>
 
             <EditText
-                android:layout_width="108dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:ems="10"
@@ -105,7 +105,7 @@
                 android:textStyle="normal|bold"/>
 
             <EditText
-                android:layout_width="108dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:ems="10"
@@ -187,9 +187,9 @@
                 android:textStyle="normal|bold"/>
 
             <EditText
-                android:layout_width="108dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="numberDecimal"
                 android:ems="10"
                 android:id="@+id/editNumStudent"
                 android:background="?android:attr/actionModeBackground" />
@@ -198,15 +198,14 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:text="Submit"
             android:textColor="@android:color/background_light"
             android:textSize="18sp"
             android:textStyle="normal|bold"
             android:background="@drawable/button_background"
             android:textColorLink="@android:color/background_light"
-            android:textColorHint="@android:color/holo_orange_dark"
-            />
+            android:textColorHint="@android:color/holo_orange_dark" />
 
     </LinearLayout>
 
