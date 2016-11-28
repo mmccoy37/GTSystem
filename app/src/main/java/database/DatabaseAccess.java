@@ -174,6 +174,30 @@ public class DatabaseAccess {
     }
 
     /**
+     * Get department name from major
+     * @param major major input
+     * @return Name of department
+     */
+    public String getDeptNameFromMajor(String major) {
+        try {
+            String query = "SELECT MAJORS.DeptName " +
+                    "FROM `MAJORS` " +
+                    "WHERE MAJORS.MajorName='" + major + "' ";
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+            ResultSet statementResults = statement.executeQuery(query);
+
+            if (statementResults.next()) {
+                String deptName = statementResults.getString(0);
+                return deptName;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
      * get categories from db
      * @return
      */
