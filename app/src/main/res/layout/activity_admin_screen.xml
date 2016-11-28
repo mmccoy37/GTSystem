@@ -18,12 +18,13 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="198dp"
             app:srcCompat="@mipmap/ic_launcher"
             android:id="@+id/imageView"
-            android:layout_weight="0.79"
-            android:layout_height="500dp"
-            android:layout_marginTop="30dp" />
+            android:layout_height="111dp"
+            android:layout_marginTop="30dp"
+            android:scaleType="center"
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -66,6 +67,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnViewAppReport"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:textSize="25sp"
+                style="@android:style/Widget.DeviceDefault.Light.TextView.SpinnerItem"
+                android:textColor="@drawable/text_color"
+                android:linksClickable="true"
+                android:onClick="onClick"/>
+
+
+            <TextView
+                android:text="Add New Course"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnAddCourse"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:textSize="25sp"
+                style="@android:style/Widget.DeviceDefault.Light.TextView.SpinnerItem"
+                android:textColor="@drawable/text_color"
+                android:linksClickable="true"
+                android:onClick="onClick"/>
+
+
+
+            <TextView
+                android:text="Add New Project"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnAddProject"
                 android:gravity="center"
                 android:layout_marginTop="20dp"
                 android:textSize="25sp"

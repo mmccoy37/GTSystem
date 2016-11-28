@@ -47,7 +47,27 @@
             android:name=".MyApplicationScreen"
             android:label="My application" />
         <activity android:name=".ViewAndApplyProjectScreen" />
-        <activity android:name=".CourseInfoScreen"></activity>
+        <activity android:name=".CourseInfoScreen" />
+        <activity
+            android:name=".AdminViewApp"
+            android:label="@string/title_activity_admin_view_app"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AdminPopProject"
+            android:label="@string/title_activity_admin_pop_project"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AdminAppReport"
+            android:label="@string/title_activity_admin_app_report"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AdminAddCourse"
+            android:label="@string/title_activity_admin_add_course"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AdminAddProject"
+            android:label="@string/title_activity_admin_add_project"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

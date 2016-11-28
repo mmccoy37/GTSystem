@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#EDE3CE"
+    tools:context="com.example.hungdo.team44phase3.AdminAddProject">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:theme="@style/AppTheme.AppBarOverlay"
+                android:weightSum="1">
+                <TextView
+                    android:text="Add a Project"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:paddingLeft="20dp"
+                    android:layout_weight="0.39"
+                    android:paddingTop="3dp" />
+            </android.support.design.widget.AppBarLayout>
+        </LinearLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:text="Advisor: "
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textView2"
+                            android:textSize="20dp"
+                            android:layout_height="50dp"
+                            android:textStyle="normal|bold"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:ems="10"
+                            android:id="@+id/editCourseNum"
+                            android:background="?android:attr/actionModeBackground" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:text="Advisor Email: "
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textView3"
+                            android:textSize="20dp"
+                            android:layout_height="50dp"
+                            android:textStyle="normal|bold"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:ems="10"
+                            android:id="@+id/editCourseName"
+                            android:background="?android:attr/actionModeBackground" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:text="Description: "
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textView4"
+                            android:textSize="20dp"
+                            android:layout_height="50dp"
+                            android:textStyle="normal|bold"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:ems="10"
+                            android:id="@+id/editInstructor"
+                            android:background="?android:attr/actionModeBackground" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:text="Designation: "
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textView5"
+                            android:textSize="20dp"
+                            android:layout_height="50dp"
+                            android:textStyle="normal|bold"/>
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="20dp"
+                            android:id="@+id/designationSpinner"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="30dp"/>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+                        android:weightSum="1">
+
+                        <TextView
+                            android:text="Category: "
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textView6"
+                            android:textSize="20dp"
+                            android:layout_height="50dp"
+                            android:textStyle="normal|bold"/>
+
+                        <Spinner
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:id="@+id/categorySpinner"
+                            android:layout_height="40dp"
+                            />
+
+                        <TextView
+                            android:text="Add a new Category"
+                            android:layout_width="wrap_content"
+                            android:textSize="10dp"
+                            android:layout_height="50dp"
+                            android:textColor="@drawable/text_color"
+                            android:textStyle="normal|bold"/>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:text="Estimated # of students: "
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textView7"
+                            android:textSize="20dp"
+                            android:layout_height="50dp"
+                            android:textStyle="normal|bold"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="numberDecimal"
+                            android:ems="10"
+                            android:id="@+id/editNumStudent"
+                            android:background="?android:attr/actionModeBackground" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:text="Major Requirement: "
+                            android:layout_width="wrap_content"
+                            android:textSize="20dp"
+                            android:layout_height="50dp"
+                            android:textStyle="normal|bold"/>
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="20dp"
+                            android:id="@+id/MajorReqSpinner"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="30dp"/>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:text="Year Requirement: "
+                            android:layout_width="wrap_content"
+                            android:textSize="20dp"
+                            android:layout_height="50dp"
+                            android:textStyle="normal|bold"/>
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="20dp"
+                            android:id="@+id/YearReqSpinner"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="30dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:text="Department Requirement: "
+                            android:layout_width="wrap_content"
+                            android:textSize="20dp"
+                            android:layout_height="50dp"
+                            android:textStyle="normal|bold"/>
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="20dp"
+                            android:id="@+id/DepReqSpinner"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="30dp"/>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Submit"
+                        android:textColor="@android:color/background_light"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold"
+                        android:background="@drawable/button_background"
+                        android:textColorLink="@android:color/background_light"
+                        android:textColorHint="@android:color/holo_orange_dark" />
+
+                </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</RelativeLayout>
+
+
+
