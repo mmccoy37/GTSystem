@@ -30,20 +30,38 @@
                 android:minHeight="68dp"
                 android:minWidth="68dp"
                 android:background="@drawable/some_button"
+                android:textColor="@android:color/background_light"
                 android:elevation="24dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:onClick="onClick" />
+                android:onClick="onClick"
+                android:layout_alignParentLeft="true" />
 
             <Button
-                android:text="Apply Filter (Search)"
-                android:layout_width="match_parent"
+                android:text="Apply Filter"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/button_search"
+                android:background="@drawable/button_background"
+                android:textColor="@android:color/background_light"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:onClick="onClick" />
+                android:onClick="onClick"
+                android:layout_weight="0.94"
+                android:textStyle="normal|bold" />
+
+            <Button
+                android:text="Reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_Reset"
+                android:background="@drawable/button_background"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:onClick="onClick"
+                android:textColor="@android:color/background_light"
+                android:textStyle="normal|bold" />
 
         </LinearLayout>
 
@@ -66,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/editText" />
+                android:id="@+id/title" />
 
             <TextView
                 android:text="Category"

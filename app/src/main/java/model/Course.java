@@ -11,11 +11,11 @@ public class Course {
     private int num_Student;
     private String designation;
 
-    public Course(int course_Num, String name, String instructor, int num_Student, String designation) {
+    public Course(int course_Num, String name, int num_Student, String instructor, String designation) {
         this.course_Num = course_Num;
         this.name = name;
-        this.instructor = instructor;
         this.num_Student = num_Student;
+        this.instructor = instructor;
         this.designation = designation;
     }
 
@@ -64,7 +64,7 @@ public class Course {
 
     @Override
     public String toString() {
-        return name;
+        return name + " (Course)";
     }
 
 }

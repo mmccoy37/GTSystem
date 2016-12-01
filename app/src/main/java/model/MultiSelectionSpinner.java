@@ -116,6 +116,7 @@ public class MultiSelectionSpinner extends Spinner implements
     }
 
     public void setItems(List<String> items) {
+        items.add(0, "All");
         _items = items.toArray(new String[items.size()]);
         mSelection = new boolean[_items.length];
         simple_adapter.clear();
@@ -194,6 +195,7 @@ public class MultiSelectionSpinner extends Spinner implements
                 selection.add(_items[i]);
             }
         }
+        selection.remove("All");
         return selection;
     }
 
