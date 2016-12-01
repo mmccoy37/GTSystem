@@ -367,19 +367,23 @@ public class DatabaseAccess {
         try {
             String dept = getDeptNameFromMajor(maj);
             for (String cat: cats) {
-                String query = "SELECT * FROM " +
-                        "(SELECT PRO.*, PC.CategoryName, PR.PRequirements " +
-                        "FROM PROJECTS AS PRO " +
-                        "LEFT JOIN PROJ_CATEGORY AS PC " +
-                        "ON PRO.PName = PC.ProjectName " +
-                        "LEFT JOIN PROJ_REQUIREMENTS as PR " +
-                        "ON PRO.PName = PR.PName " +
-                        "WHERE PRO.Designation = '" + des + "' " +
-                        "AND PC.CategoryName = '" + cat + "' " +
-                        "AND (PR.PRequirements = '" + ye + "' " +
-                        "OR PR.PRequirements = '" + maj + "' " +
-                        "OR PR.PRequirements = '" + dept + "')) as T " +
-                        "WHERE T.PRequirements = '" + ye + "';";
+                String query = "SELECT P.*, P_R.PRequirements FROM PROJECTS AS P " +
+                        "LEFT JOIN PROJ_REQUIREMENTS AS P_R " +
+                        "ON P.PName = P_R.PName " +
+                        "WHERE P.PName IN " +
+                        "   (SELECT PRO.PName " +
+                        "   FROM PROJECTS AS PRO " +
+                        "   LEFT JOIN PROJ_CATEGORY AS PC " +
+                        "   ON PRO.PName = PC.ProjectName " +
+                        "   LEFT JOIN PROJ_REQUIREMENTS as PR " +
+                        "   ON PRO.PName = PR.PName " +
+                        "   WHERE PRO.Designation = '" + des + "' " +
+                        "   AND PC.CategoryName = '" + cat + "' " +
+                        "   AND (PR.PRequirements = '" + ye + "' " +
+                        "       OR PR.PRequirements = '" + maj + "' " +
+                        "       OR PR.PRequirements = '" + dept + "') " +
+                        "   GROUP BY PRO.PName HAVING COUNT(*)>1) " +
+                        "AND P_R.PRequirements = '" + ye + "';";
                 Statement statement = connection.createStatement();
                 statement.execute(query);
                 ResultSet statementResults = statement.executeQuery(query);
