@@ -3,6 +3,7 @@ package database;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.hungdo.team44phase3.UserScreen;
 
@@ -275,14 +276,26 @@ public class DatabaseAccess {
     public List<Object> getMainPageResults(String Title, List<String> Category, String Designation,
                                                 String Major, String Year, int Type) {
         List<Object> res = new ArrayList<>();
-
-        if (Type == UserScreen.TYPE_IS_BOTH) {
-            res.addAll(getListProjectByFilter(Category, Designation, Major, Year));
-            res.addAll(getListCourseByFilter(Category, Designation));
-        } else if (Type == UserScreen.TYPE_IS_COURSE) {
-            res.addAll(getListCourseByFilter(Category, Designation));
-        } else if (Type == UserScreen.TYPE_IS_PROJECT) {
-            res.addAll(getListProjectByFilter(Category, Designation, Major, Year));
+        if (!Title.equals("")) {
+            res.addAll(getListProjectsByTitle(Title));
+            res.addAll(getListCoursesByTitle(Title));
+            if (res.size() == 0) {
+                Toast error = Toast.makeText(context, "Title is not exist!", Toast.LENGTH_SHORT);
+                error.show();
+            }
+        } else {
+            if (Type == UserScreen.TYPE_IS_BOTH) {
+                res.addAll(getListProjectByFilter(Category, Designation, Major, Year));
+                res.addAll(getListCourseByFilter(Category, Designation));
+            } else if (Type == UserScreen.TYPE_IS_COURSE) {
+                res.addAll(getListCourseByFilter(Category, Designation));
+            } else if (Type == UserScreen.TYPE_IS_PROJECT) {
+                res.addAll(getListProjectByFilter(Category, Designation, Major, Year));
+            }
+            if (res.size() == 0) {
+                Toast error = Toast.makeText(context, "Nothing match filters!", Toast.LENGTH_SHORT);
+                error.show();
+            }
         }
         Log.d("QUERY", "MainPage query results: " + res.toString());
         return res;
@@ -362,6 +375,14 @@ public class DatabaseAccess {
     }
 
 
+    /**
+     * Get list of projects by filters
+     * @param cats list of categories
+     * @param des designation
+     * @param maj major
+     * @param ye year
+     * @return list of projects
+     */
     public List<Project> getListProjectByFilter(List<String> cats, String des, String maj, String ye) {
         List<Project> res = new ArrayList<>();
         try {
@@ -404,7 +425,50 @@ public class DatabaseAccess {
     }
 
 
+    public List<Project> getListProjectsByTitle(String title) {
+        List<Project> listP = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM PROJECTS AS P WHERE P.PName = '" + title + "';";
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+            ResultSet statementResults = statement.executeQuery(query);
 
+            while (statementResults.next()) {
+                Project project = new Project(statementResults.getString("PName"),
+                        statementResults.getInt("EstimatedStudents"),
+                        statementResults.getString("Description"),
+                        statementResults.getString("AdvisorName"),
+                        statementResults.getString("AdvisorEmail"),
+                        statementResults.getString("Designation"));
+                listP.add(project);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return listP;
+    }
+
+    public List<Course> getListCoursesByTitle(String title) {
+        List<Course> listC = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM COURSE AS C WHERE C.CourseName = '" + title + "';";
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+            ResultSet statementResults = statement.executeQuery(query);
+
+            while (statementResults.next()) {
+                Course course = new Course(statementResults.getInt("CourseNumber"),
+                        statementResults.getString("CourseName"),
+                        statementResults.getInt("EstimatedStudentNum"),
+                        statementResults.getString("Instructor"),
+                        statementResults.getString("DesignationName"));
+                listC.add(course);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return listC;
+    }
 
 
 

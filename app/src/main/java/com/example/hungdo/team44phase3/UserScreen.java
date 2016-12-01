@@ -191,6 +191,7 @@ public class UserScreen extends Activity {
 
         if (v.getId() == R.id.button_search) {
             CATEGORY = spinnerCat.getSelectedStrings();
+            TITLE = title.getText().toString();
             listView.setAdapter(
                     new ArrayAdapter<>(context, android.R.layout.simple_list_item_1,
                             data.getMainPageResults(TITLE, CATEGORY, DESIGNATION, MAJOR, YEAR, TYPE)));
