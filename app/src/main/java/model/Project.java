@@ -14,8 +14,8 @@ public class Project {
 
 
 
-    public Project(String name, String description, String advisor_Email,
-                   String advisor_Name, int num_Student, String designation) {
+    public Project(String name, int num_Student, String description, String advisor_Name,
+                   String advisor_Email, String designation) {
         this.name = name;
         this.description = description;
         this.advisor_Email = advisor_Email;
@@ -76,6 +76,6 @@ public class Project {
 
     @Override
     public String toString() {
-        return name;
+        return name + " (Project)";
     }
 }

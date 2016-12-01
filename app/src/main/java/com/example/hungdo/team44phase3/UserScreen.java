@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -20,12 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import database.DatabaseAccess;
+import model.Course;
 import model.MultiSelectionSpinner;
 import model.YearLevel;
 
 public class UserScreen extends Activity {
 
     private MultiSelectionSpinner spinnerCat;
+    private EditText title;
     private Spinner spinnerDes;
     private Spinner spinnerMajor;
     private Spinner spinnerYear;
@@ -35,7 +38,7 @@ public class UserScreen extends Activity {
 
     DatabaseAccess data;
     private String YEAR;
-    private String CATEGORY;
+    private List<String> CATEGORY;
     private String DESIGNATION;
     private String MAJOR;
     private String TITLE;
@@ -62,10 +65,23 @@ public class UserScreen extends Activity {
     }
 
     private void setupFields() {
+        title = (EditText) findViewById(R.id.title);
+
         // Setup ListView
         listView = (ListView) findViewById(R.id.listview);
-        //adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrs);
-        //listView.setAdapter(adapter);
+        listView.setAdapter(new ArrayAdapter<Object>(context, android.R.layout.simple_list_item_1,
+                data.getAllCourseAndProject()));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (listView.getItemAtPosition(position).getClass() == Course.class) {
+                    startActivity(new Intent(context, CourseInfoScreen.class));
+                } else {
+                    startActivity(new Intent(context, ViewAndApplyProjectScreen.class));
+                }
+            }
+        });
 
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radio_group_1);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -91,17 +107,6 @@ public class UserScreen extends Activity {
         //spinnerCat.setAdapter(adapter);
         spinnerCat.setItems(data.getCategories());
         spinnerCat.setSelectALL();
-        spinnerCat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                CATEGORY = spinnerCat.getSelectedItem().toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                //nothing
-            }
-        });
 
 
         ArrayList<String> listDes = data.getDesignations();
@@ -159,16 +164,6 @@ public class UserScreen extends Activity {
             }
         });
 
-        Button buttonSearch = (Button) findViewById(R.id.button_search);
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listView.setAdapter(
-                        new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1,
-                                data.getMainPageResults(TITLE, CATEGORY, DESIGNATION, MAJOR, YEAR, TYPE)));
-            }
-        });
-
     }
 
     /**
@@ -179,6 +174,26 @@ public class UserScreen extends Activity {
         // If button me is clicked
         if (v.getId() == R.id.btnMe) {
             startActivity(new Intent(context, ProfileActivity.class));
+        }
+
+        if (v.getId() == R.id.btn_Reset) {
+            spinnerCat.setSelectALL();
+            spinnerYear.setSelection(0);
+            spinnerDes.setSelection(0);
+            spinnerMajor.setSelection(0);
+            title.setText("");
+            RadioButton rb = (RadioButton) findViewById(R.id.radioButton);
+            rb.setChecked(true);
+
+            listView.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1,
+                    data.getAllCourseAndProject()));
+        }
+
+        if (v.getId() == R.id.button_search) {
+            CATEGORY = spinnerCat.getSelectedStrings();
+            listView.setAdapter(
+                    new ArrayAdapter<>(context, android.R.layout.simple_list_item_1,
+                            data.getMainPageResults(TITLE, CATEGORY, DESIGNATION, MAJOR, YEAR, TYPE)));
         }
     }
 

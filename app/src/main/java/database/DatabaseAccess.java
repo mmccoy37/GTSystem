@@ -12,9 +12,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import exception.NonUniqueEmailException;
 import exception.NonUniqueUserNameException;
+import model.Course;
+import model.Project;
 import model.User;
 
 /**
@@ -125,7 +128,7 @@ public class DatabaseAccess {
      * @param user new user
      */
     public void createUser(User user) throws NonUniqueUserNameException, NonUniqueEmailException {
-        String usename = user.getUsername();
+        String username = user.getUsername();
         String password = user.getPassword();
         String email = user.getEmail();
         String major = user.getMajor();
@@ -139,7 +142,7 @@ public class DatabaseAccess {
                         "Username, " +
                         "Password, " +
                         "Type) " +
-                        "VALUES ('" + usename +
+                        "VALUES ('" + username +
                         "', '" + password + "', '0'" +
                         ");";
                 Statement statement = connection.createStatement();
@@ -151,7 +154,7 @@ public class DatabaseAccess {
                         "Year) " +
                         "VALUES (" +
                         "'" + email + "', " +
-                        "'" + usename + "', " +
+                        "'" + username + "', " +
                         "'" + major + "', " +
                         "'" + year + "'" +
                         ");";
@@ -161,7 +164,7 @@ public class DatabaseAccess {
                 System.out.println(e.getMessage());
                 try {
                     String query = "DELETE FROM USERS " +
-                            "WHERE Username = '" + usename + "';";
+                            "WHERE Username = '" + username + "';";
                     Statement statement = connection.createStatement();
                     statement.execute(query);
                 } catch (SQLException s) {
@@ -181,14 +184,14 @@ public class DatabaseAccess {
     public String getDeptNameFromMajor(String major) {
         try {
             String query = "SELECT MAJORS.DeptName " +
-                    "FROM `MAJORS` " +
+                    "FROM MAJORS " +
                     "WHERE MAJORS.MajorName='" + major + "' ";
             Statement statement = connection.createStatement();
             statement.execute(query);
             ResultSet statementResults = statement.executeQuery(query);
 
             if (statementResults.next()) {
-                String deptName = statementResults.getString(0);
+                String deptName = statementResults.getString(1);
                 return deptName;
             }
         } catch (SQLException e) {
@@ -269,37 +272,132 @@ public class DatabaseAccess {
         return res;
     }
 
-    public ArrayList<String> getMainPageResults(String Title, String Category, String Designation,
+    public List<Object> getMainPageResults(String Title, List<String> Category, String Designation,
                                                 String Major, String Year, int Type) {
-        //TODO: THIS IS BROKEN. AKA MUST FIX ONCE WE DO OUR SQL QUERIES FOR PHASE 3
-        ArrayList<String> res = new ArrayList<>();
+        List<Object> res = new ArrayList<>();
+
+        if (Type == UserScreen.TYPE_IS_BOTH) {
+            res.addAll(getListProjectByFilter(Category, Designation, Major, Year));
+            res.addAll(getListCourseByFilter(Category, Designation));
+        } else if (Type == UserScreen.TYPE_IS_COURSE) {
+            res.addAll(getListCourseByFilter(Category, Designation));
+        } else if (Type == UserScreen.TYPE_IS_PROJECT) {
+            res.addAll(getListProjectByFilter(Category, Designation, Major, Year));
+        }
+        Log.d("QUERY", "MainPage query results: " + res.toString());
+        return res;
+    }
+
+    /**
+     * Get a list of all courses and projects
+     * @return
+     */
+    public List<Object> getAllCourseAndProject() {
+        List<Object> listAll = new ArrayList<>();
         try {
+            String query = "SELECT * FROM COURSE;";
             Statement statement = connection.createStatement();
-            ResultSet rs = null;
-            if (Type == UserScreen.TYPE_IS_BOTH) {
-                rs = statement.executeQuery("SELECT DISTINCT * FROM COURSE,PROJECTS");
-                while (rs.next()) {
-                    res.add(rs.getString("CourseName") + rs.getString("PName"));
-                }
-            } else if (Type == UserScreen.TYPE_IS_COURSE) {
-                rs = statement.executeQuery("SELECT DISTINCT * FROM COURSE");
-                while (rs.next()) {
-                    res.add(rs.getString("CourseName"));
-                }
-            } else if (Type == UserScreen.TYPE_IS_PROJECT) {
-                rs = statement.executeQuery("SELECT DISTINCT * FROM PROJECTS");
-                while (rs.next()) {
-                    res.add(rs.getString("PName"));
+            statement.execute(query);
+            ResultSet statementResults = statement.executeQuery(query);
+
+            while (statementResults.next()) {
+                Course course = new Course(statementResults.getInt("CourseNumber"),
+                        statementResults.getString("CourseName"),
+                        statementResults.getInt("EstimatedStudentNum"),
+                        statementResults.getString("Instructor"),
+                        statementResults.getString("DesignationName"));
+                listAll.add(course);
+            }
+            query = "SELECT * FROM PROJECTS;";
+            statement = connection.createStatement();
+            statement.execute(query);
+            statementResults = statement.executeQuery(query);
+
+            while (statementResults.next()) {
+                Project project = new Project(statementResults.getString("PName"),
+                        statementResults.getInt("EstimatedStudents"),
+                        statementResults.getString("Description"),
+                        statementResults.getString("AdvisorName"),
+                        statementResults.getString("AdvisorEmail"),
+                        statementResults.getString("Designation"));
+                listAll.add(project);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return listAll;
+    }
+
+    /**
+     * Get courses by filter
+     * @param cats list of categories
+     * @param des designation
+     * @return a list of courses
+     */
+    public List<Course> getListCourseByFilter(List<String> cats, String des) {
+        List<Course> res = new ArrayList<>();
+        try {
+            for (String cat: cats) {
+                String query = "SELECT Co.* " +
+                        "FROM COURSE as Co " +
+                        "LEFT JOIN COURSE_CATEGORY as Ca " +
+                        "ON Ca.CourseNumber = Co.CourseNumber " +
+                        "WHERE Ca.CategoryName='" + cat + "' AND Co.DesignationName='" + des + "';";
+                Statement statement = connection.createStatement();
+                statement.execute(query);
+                ResultSet statementResults = statement.executeQuery(query);
+                while (statementResults.next()) {
+                    Course c = new Course(statementResults.getInt("CourseNumber"),
+                            statementResults.getString("CourseName"),
+                            statementResults.getInt("EstimatedStudentNum"),
+                            statementResults.getString("Instructor"),
+                            statementResults.getString("DesignationName"));
+                    res.add(c);
                 }
             }
-            Log.d("QUERY", "MainPage query results: " + res.toString());
         } catch (SQLException e) {
-            Log.e("QUERY", e.getMessage());
+            System.out.println("Here " + e.getMessage());
         }
         return res;
     }
 
 
+    public List<Project> getListProjectByFilter(List<String> cats, String des, String maj, String ye) {
+        List<Project> res = new ArrayList<>();
+        try {
+            String dept = getDeptNameFromMajor(maj);
+            for (String cat: cats) {
+                String query = "SELECT * FROM " +
+                        "(SELECT PRO.*, PC.CategoryName, PR.PRequirements " +
+                        "FROM PROJECTS AS PRO " +
+                        "LEFT JOIN PROJ_CATEGORY AS PC " +
+                        "ON PRO.PName = PC.ProjectName " +
+                        "LEFT JOIN PROJ_REQUIREMENTS as PR " +
+                        "ON PRO.PName = PR.PName " +
+                        "WHERE PRO.Designation = '" + des + "' " +
+                        "AND PC.CategoryName = '" + cat + "' " +
+                        "AND (PR.PRequirements = '" + ye + "' " +
+                        "OR PR.PRequirements = '" + maj + "' " +
+                        "OR PR.PRequirements = '" + dept + "')) as T " +
+                        "WHERE T.PRequirements = '" + ye + "';";
+                Statement statement = connection.createStatement();
+                statement.execute(query);
+                ResultSet statementResults = statement.executeQuery(query);
+                while (statementResults.next()) {
+                    Project p = new Project(statementResults.getString("PName"),
+                            statementResults.getInt("EstimatedStudents"),
+                            statementResults.getString("Description"),
+                            statementResults.getString("AdvisorName"),
+                            statementResults.getString("AdvisorEmail"),
+                            statementResults.getString("Designation"));
+                    res.add(p);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Here " + e.getMessage());
+        }
+        return res;
+    }
 
 
 
