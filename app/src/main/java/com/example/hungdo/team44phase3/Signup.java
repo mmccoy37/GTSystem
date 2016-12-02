@@ -29,8 +29,6 @@ public class Signup extends AppCompatActivity {
     private EditText uname;
     private EditText pass1;
     private EditText pass2;
-    private Spinner spinnerYear;
-    private Spinner spinnerMajor;
 
     private DatabaseAccess data = DatabaseAccess.getDatabaseAccess();
 
@@ -52,31 +50,6 @@ public class Signup extends AppCompatActivity {
         pass1 = (EditText) findViewById(R.id.pass1);
         pass2 = (EditText) findViewById(R.id.pass2);
 
-        // Setup spinnerYear
-        spinnerYear = (Spinner) findViewById(R.id.spinnerYear);
-        List<String> list = new ArrayList<>();
-        list.add("YEAR");
-        list.add("FRESHMAN");
-        list.add("SOPHOMORE");
-        list.add("JUNIOR");
-        list.add("SENIOR");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerYear.setAdapter(dataAdapter);
-
-        // Setup spinnerMajor
-        spinnerMajor = (Spinner) findViewById(R.id.spinnerMajor);
-        list = new ArrayList<>();
-        list.add("MAJOR");
-        list.add("CS");
-        list.add("CM");
-        list.add("EE");
-        list.add("MATH");
-        dataAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerMajor.setAdapter(dataAdapter);
 
     }
 
@@ -91,22 +64,10 @@ public class Signup extends AppCompatActivity {
             String pass1str = pass1.getText().toString();
             String pass2str = pass2.getText().toString();
             String gatechEmailstr = emailstr + gatechEmail.getText().toString();
-            int year = 0;
-            String yearstr = spinnerYear.getSelectedItem().toString();
-            String majorstr = spinnerMajor.getSelectedItem().toString();
-            if (yearstr.equals("FRESHMAN")) {
-                year = 1;
-            } else if (yearstr.equals("SOPHOMORE")) {
-                year = 2;
-            } else if (yearstr.equals("JUNIOR")) {
-                year = 3;
-            } else {
-                year = 4;
-            }
+
 
             // Check conditions
-            if (yearstr.equals("YEAR") || majorstr.equals("MAJOR") || emailstr.equals("")
-                    || unamestr.equals("") || pass1str.equals("") || pass2str.equals("")) {
+            if (emailstr.equals("") || unamestr.equals("") || pass1str.equals("") || pass2str.equals("")) {
                 Toast pass = Toast.makeText(this, "Some information are missing!", Toast.LENGTH_SHORT);
                 pass.show();
             } else if (!isValidEmail(gatechEmailstr)) {
@@ -121,8 +82,7 @@ public class Signup extends AppCompatActivity {
                 pass.show();
             } else {
                 try {
-                    User newUser = new User(unamestr, pass1str, emailstr
-                            + gatechEmailstr, majorstr, year);
+                    User newUser = new User(unamestr, pass1str, gatechEmailstr, null, 0);
                     // Check database connection before execute
                     if (data.getConnection() == null) {
                         AlertDialog alertDialog = new AlertDialog.Builder(this).create();

@@ -66,6 +66,17 @@ public class MultiSelectionSpinner extends Spinner implements
                 simple_adapter.add(buildSelectedItemString());
             }
 
+            boolean all = true;
+            for (int i = 0; i < mSelection.length; i++) {
+                if (mSelection[i] == false) {
+                    all = false;
+                }
+            }
+            if (all == true) {
+                simple_adapter.clear();
+                simple_adapter.add("ALL");
+            }
+
         } else {
             throw new IllegalArgumentException(
                     "Argument 'which' is out of bounds.");
@@ -105,6 +116,7 @@ public class MultiSelectionSpinner extends Spinner implements
     }
 
     public void setItems(List<String> items) {
+        items.add(0, "All");
         _items = items.toArray(new String[items.size()]);
         mSelection = new boolean[_items.length];
         simple_adapter.clear();
@@ -183,6 +195,7 @@ public class MultiSelectionSpinner extends Spinner implements
                 selection.add(_items[i]);
             }
         }
+        selection.remove("All");
         return selection;
     }
 

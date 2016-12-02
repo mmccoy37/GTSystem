@@ -62,32 +62,6 @@
                         android:textSize="18sp" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.15"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp">
-
-                    <Spinner
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spinnerYear"
-                        android:layout_marginTop="30dp"
-                        style="@style/Widget.AppCompat.Spinner"
-                        android:layout_weight="1"
-                        android:layout_width="200dp" />
-
-                    <Spinner
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spinnerMajor"
-                        android:layout_weight="1"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_width="150dp" />
-
-                </LinearLayout>
-
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
