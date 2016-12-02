@@ -424,7 +424,11 @@ public class DatabaseAccess {
         return res;
     }
 
-
+    /**
+     * Get list project by title
+     * @param title name of project
+     * @return list of project match title
+     */
     public List<Project> getListProjectsByTitle(String title) {
         List<Project> listP = new ArrayList<>();
         try {
@@ -448,6 +452,11 @@ public class DatabaseAccess {
         return listP;
     }
 
+    /**
+     * Get list course by title
+     * @param title name of course
+     * @return list of course match title
+     */
     public List<Course> getListCoursesByTitle(String title) {
         List<Course> listC = new ArrayList<>();
         try {
@@ -470,8 +479,55 @@ public class DatabaseAccess {
         return listC;
     }
 
+    /**
+     * get list categories of course name
+     * @param name name of course
+     * @return list categories
+     */
+    public List<String> getCategoriesOfCourseName(String name) {
+        List<String> list = new ArrayList<>();
+        try {
+            String query = "SELECT Ca.CategoryName FROM COURSE AS C " +
+                    "LEFT JOIN COURSE_CATEGORY AS Ca " +
+                    "ON C.CourseNumber = Ca.CourseNumber " +
+                    "WHERE C.CourseName = '" + name + "';";
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+            ResultSet statementResults = statement.executeQuery(query);
 
+            while (statementResults.next()) {
+                list.add(statementResults.getString("CategoryName"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
 
+    /**
+     * Get list of categories of project name
+     * @param name name of project
+     * @return
+     */
+    public List<String> getCategoriesOfProjectName(String name) {
+        List<String> list = new ArrayList<>();
+        try {
+            String query = "SELECT Pc.CategoryName FROM PROJECTS AS P " +
+                    "LEFT JOIN PROJ_CATEGORY AS Pc " +
+                    "ON P.PName = Pc.ProjectName " +
+                    "WHERE P.PName = '" + name + "';";
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+            ResultSet statementResults = statement.executeQuery(query);
+
+            while (statementResults.next()) {
+                list.add(statementResults.getString("CategoryName"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
 
 
 
