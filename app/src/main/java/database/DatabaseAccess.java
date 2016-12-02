@@ -314,7 +314,7 @@ public class DatabaseAccess {
             ResultSet statementResults = statement.executeQuery(query);
 
             while (statementResults.next()) {
-                Course course = new Course(statementResults.getInt("CourseNumber"),
+                Course course = new Course(statementResults.getString("CourseNumber"),
                         statementResults.getString("CourseName"),
                         statementResults.getInt("EstimatedStudentNum"),
                         statementResults.getString("Instructor"),
@@ -360,7 +360,7 @@ public class DatabaseAccess {
                 statement.execute(query);
                 ResultSet statementResults = statement.executeQuery(query);
                 while (statementResults.next()) {
-                    Course c = new Course(statementResults.getInt("CourseNumber"),
+                    Course c = new Course(statementResults.getString("CourseNumber"),
                             statementResults.getString("CourseName"),
                             statementResults.getInt("EstimatedStudentNum"),
                             statementResults.getString("Instructor"),
@@ -466,7 +466,7 @@ public class DatabaseAccess {
             ResultSet statementResults = statement.executeQuery(query);
 
             while (statementResults.next()) {
-                Course course = new Course(statementResults.getInt("CourseNumber"),
+                Course course = new Course(statementResults.getString("CourseNumber"),
                         statementResults.getString("CourseName"),
                         statementResults.getInt("EstimatedStudentNum"),
                         statementResults.getString("Instructor"),
@@ -529,6 +529,30 @@ public class DatabaseAccess {
         return list;
     }
 
+    /**
+     * Get list requirements of project
+     * @param name name of project
+     * @return list of requirements
+     */
+    public List<String> getListRequireByProjectName(String name) {
+        List<String> list = new ArrayList<>();
+        try {
+            String query = "SELECT Pr.PRequirements FROM PROJECTS AS P " +
+                    "LEFT JOIN  PROJ_REQUIREMENTS AS Pr " +
+                    "ON P.PName = Pr.PName " +
+                    "WHERE P.PName = '" + name + "';";
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+            ResultSet statementResults = statement.executeQuery(query);
+
+            while (statementResults.next()) {
+                list.add(statementResults.getString("PRequirements"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
 
 
 
