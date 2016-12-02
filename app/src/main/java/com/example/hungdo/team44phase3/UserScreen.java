@@ -23,6 +23,7 @@ import java.util.List;
 import database.DatabaseAccess;
 import model.Course;
 import model.MultiSelectionSpinner;
+import model.Project;
 import model.YearLevel;
 
 public class UserScreen extends Activity {
@@ -37,6 +38,9 @@ public class UserScreen extends Activity {
     ArrayAdapter<String> adapter;
 
     DatabaseAccess data;
+    private ImageButton btnMe;
+    private Button search;
+    private Button reset;
     private String YEAR;
     private List<String> CATEGORY;
     private String DESIGNATION;
@@ -46,6 +50,8 @@ public class UserScreen extends Activity {
     public static int TYPE_IS_COURSE = 1;
     public static int TYPE_IS_BOTH = 2;
     private int TYPE = TYPE_IS_BOTH;
+    public static Course COURSE;
+    public static Project PROJECT;
     private Context context;
 
     @Override
@@ -76,8 +82,10 @@ public class UserScreen extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (listView.getItemAtPosition(position).getClass() == Course.class) {
+                    COURSE = (Course) listView.getItemAtPosition(position);
                     startActivity(new Intent(context, CourseInfoScreen.class));
                 } else {
+                    PROJECT = (Project) listView.getItemAtPosition(position);
                     startActivity(new Intent(context, ViewAndApplyProjectScreen.class));
                 }
             }
@@ -164,6 +172,43 @@ public class UserScreen extends Activity {
             }
         });
 
+        btnMe = (ImageButton) findViewById(R.id.btnMe);
+        btnMe.setOnClickListener(new AdapterView.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, ProfileActivity.class));
+            }
+        });
+
+        search = (Button) findViewById(R.id.button_search);
+        search.setOnClickListener(new AdapterView.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CATEGORY = spinnerCat.getSelectedStrings();
+                TITLE = title.getText().toString();
+                listView.setAdapter(
+                        new ArrayAdapter<>(context, android.R.layout.simple_list_item_1,
+                                data.getMainPageResults(TITLE, CATEGORY, DESIGNATION, MAJOR, YEAR, TYPE)));
+            }
+        });
+
+        reset = (Button) findViewById(R.id.btn_Reset);
+        reset.setOnClickListener(new AdapterView.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinnerCat.setSelectALL();
+                spinnerYear.setSelection(0);
+                spinnerDes.setSelection(0);
+                spinnerMajor.setSelection(0);
+                title.setText("");
+                RadioButton rb = (RadioButton) findViewById(R.id.radioButton);
+                rb.setChecked(true);
+
+                listView.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1,
+                        data.getAllCourseAndProject()));
+            }
+        });
+
     }
 
     /**
@@ -172,30 +217,6 @@ public class UserScreen extends Activity {
      */
     public void onClick(View v) {
         // If button me is clicked
-        if (v.getId() == R.id.btnMe) {
-            startActivity(new Intent(context, ProfileActivity.class));
-        }
-
-        if (v.getId() == R.id.btn_Reset) {
-            spinnerCat.setSelectALL();
-            spinnerYear.setSelection(0);
-            spinnerDes.setSelection(0);
-            spinnerMajor.setSelection(0);
-            title.setText("");
-            RadioButton rb = (RadioButton) findViewById(R.id.radioButton);
-            rb.setChecked(true);
-
-            listView.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1,
-                    data.getAllCourseAndProject()));
-        }
-
-        if (v.getId() == R.id.button_search) {
-            CATEGORY = spinnerCat.getSelectedStrings();
-            TITLE = title.getText().toString();
-            listView.setAdapter(
-                    new ArrayAdapter<>(context, android.R.layout.simple_list_item_1,
-                            data.getMainPageResults(TITLE, CATEGORY, DESIGNATION, MAJOR, YEAR, TYPE)));
-        }
     }
 
 
