@@ -177,6 +177,36 @@ public class DatabaseAccess {
         }
     }
 
+    public String addNewCourse(String cnum, String cname, String cstudents, String cinstr,
+                               String designation, List<String> ccategory) {
+        cnum = cnum.toUpperCase();
+        try {
+            String query = "INSERT INTO COURSE (" +
+                    "CourseNumber, CourseName, EstimatedStudentNum, Instructor, DesignationName)" +
+                    "VALUES (" +
+                    "'" +cnum + "', " +
+                    "'" + cname + "', " +
+                    "'" + cstudents + "'," +
+                    "'" + cinstr + "', " +
+                    "'" + designation +"');";
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+            for (String s : ccategory) {
+                query = "INSERT INTO COURSE_CATEGORY (CategoryName, CourseNumber) VALUES (" +
+                        "'" + s + "', '" + cnum + "');";
+                statement = connection.createStatement();
+                statement.execute(query);
+            }
+        } catch (SQLException s) {
+            Log.e("SQL", s.getMessage());
+            return s.getMessage();
+        } catch (Exception e) {
+            Log.e("DATA", e.getMessage());
+            return e.getMessage();
+        }
+        return "Course '" + cname + "' added!";
+    }
+
     /**
      * Get department name from major
      * @param major major input
