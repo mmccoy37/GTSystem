@@ -24,15 +24,16 @@
             android:gravity="center_horizontal"
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="normal|bold"
-            android:textSize="24sp"
+            android:textSize="30sp"
             android:layout_marginBottom="20dp" />
 
         <TextView
             android:text="Content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/textView10"
-            android:layout_marginBottom="56dp" />
+            android:id="@+id/projectContent"
+            android:layout_marginBottom="56dp"
+            android:textSize="24sp" />
 
     </LinearLayout>
 
@@ -40,7 +41,7 @@
         android:text="APPLY"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/apply"
+        android:id="@+id/btnApply"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"

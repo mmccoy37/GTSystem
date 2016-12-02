@@ -5,13 +5,13 @@ package model;
  */
 
 public class Course {
-    private int course_Num;
+    private String course_Num;
     private String name;
     private String instructor;
     private int num_Student;
     private String designation;
 
-    public Course(int course_Num, String name, int num_Student, String instructor, String designation) {
+    public Course(String course_Num, String name, int num_Student, String instructor, String designation) {
         this.course_Num = course_Num;
         this.name = name;
         this.num_Student = num_Student;
@@ -20,7 +20,7 @@ public class Course {
     }
 
     // Getters
-    public int getCourse_Num() {
+    public String getCourse_Num() {
         return course_Num;
     }
 
@@ -42,7 +42,7 @@ public class Course {
 
 
     // Setters
-    public void setCourse_Num(int course_Num) {
+    public void setCourse_Num(String course_Num) {
         this.course_Num = course_Num;
     }
 
