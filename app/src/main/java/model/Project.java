@@ -74,8 +74,41 @@ public class Project {
         this.designation = designation;
     }
 
+    /**
+     * Set equals to compare name.
+     * @param obj the user instance
+     * @return whether the object is a project and their name matches
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (null == obj) {
+            return false;
+        }
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Project)) {
+            return false;
+        }
+        Project p = (Project) obj;
+        return this.name.equals(p.getName());
+    }
+
+    /**
+     * Set hash code equal to the username's hashcode.
+     * @return the username's hashcode
+     */
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
     @Override
     public String toString() {
         return name + " (Project)";
+    }
+
+    public String getType() {
+        return "Project";
     }
 }
