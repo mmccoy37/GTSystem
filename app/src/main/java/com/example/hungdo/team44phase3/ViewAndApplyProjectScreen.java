@@ -7,17 +7,25 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import database.DatabaseAccess;
+import exception.DupplicateProjectName;
 import model.Project;
+import model.User;
 
 public class ViewAndApplyProjectScreen extends Activity {
 
-    TextView projectName;
-    TextView projectContent;
-    DatabaseAccess data;
+    private TextView projectName;
+    private TextView projectContent;
+    private DatabaseAccess data;
+    private User u;
+    private Project p;
+    private String currentDay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +33,15 @@ public class ViewAndApplyProjectScreen extends Activity {
         data = DatabaseAccess.getDatabaseAccess();
         data.setContext(this);
 
-        Project p = UserScreen.PROJECT;
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DATE);
+        currentDay = year + "-" + month + "-" + day;
+
+        u = data.getUserByUserName(LoginActivity.USERNAME);
+
+        p = UserScreen.PROJECT;
         projectName = (TextView) findViewById(R.id.projectName);
         projectName.setText(p.getName());
 
@@ -51,17 +67,20 @@ public class ViewAndApplyProjectScreen extends Activity {
                 "\nRequirements: " + requirements +
                 "\nEstimated Number Of Students: " + p.getNum_Student();
         projectContent.setText(content);
-
-        applyClick();
     }
 
-    private void applyClick() {
-        Button apply = (Button) findViewById(R.id.btnApply);
-        apply.setOnClickListener(new AdapterView.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
+
+    public void onClick(View v) {
+        if (v.getId() == R.id.btnApply) {
+            try {
+                data.applyProject(u.getEmail(), p.getName(), currentDay);
+                Toast toast = Toast.makeText(this, "Apply Successful", Toast.LENGTH_SHORT);
+                toast.show();
+            } catch (DupplicateProjectName e) {
+                Toast toast = Toast.makeText(this, "You applied this project before!", Toast.LENGTH_SHORT);
+                toast.show();
             }
-        });
+        }
     }
 }

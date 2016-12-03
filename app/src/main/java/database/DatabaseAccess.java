@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import exception.DupplicateProjectName;
 import exception.NonUniqueEmailException;
 import exception.NonUniqueUserNameException;
 import model.Course;
@@ -678,6 +679,50 @@ public class DatabaseAccess {
         }
         return list;
     }
+
+    /**
+     * Update student information by email
+     * @param email email
+     * @param major major
+     * @param year year
+     */
+    public void updateUserByEmail(String email, String major, int year) {
+        try {
+            String query = "UPDATE STUDENTS " +
+                    "SET MajorName='" + major + "', Year = '" + year + "'" +
+                    "WHERE GTechEmail='" + email + "';";
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Apply new project
+     * @param email email of student
+     * @param projectName name of project
+     * @param day day
+     */
+    public void applyProject(String email, String projectName, String day) throws DupplicateProjectName {
+        try {
+            String query = "INSERT INTO APPLY (" +
+                    "GTechEmail, " +
+                    "ProjName, " +
+                    "Date, " +
+                    "Status) " +
+                    "VALUES (" +
+                    "'" + email + "', " +
+                    "'" + projectName + "', " +
+                    "'" + day + "', " +
+                    "'pending');";
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+        } catch (SQLException e) {
+            throw new DupplicateProjectName();
+        }
+    }
+
 
 
 
