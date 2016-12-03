@@ -130,8 +130,8 @@ public class DatabaseAccess {
                     "S.GTechEmail, S.majorName, S.year, U.type " +
                     "FROM USERS AS U " +
                     "LEFT JOIN STUDENTS AS S " +
-                    "ON U.Username=S.Username " +
-                    "WHERE S.GTechEmail='" + email + "';";
+                    "ON U.Username = S.Username " +
+                    "WHERE S.GTechEmail ='" + email + "';";
             Statement statement = connection.createStatement();
             ResultSet statementResults = statement.executeQuery(query);
             if (statementResults.next()) {
@@ -328,7 +328,6 @@ public class DatabaseAccess {
                     "FROM MAJORS " +
                     "WHERE MAJORS.MajorName='" + major + "' ";
             Statement statement = connection.createStatement();
-            statement.execute(query);
             ResultSet statementResults = statement.executeQuery(query);
 
             if (statementResults.next()) {
@@ -464,7 +463,6 @@ public class DatabaseAccess {
         try {
             String query = "SELECT * FROM COURSE;";
             Statement statement = connection.createStatement();
-            statement.execute(query);
             ResultSet statementResults = statement.executeQuery(query);
 
             while (statementResults.next()) {
@@ -477,7 +475,6 @@ public class DatabaseAccess {
             }
             query = "SELECT * FROM PROJECTS;";
             statement = connection.createStatement();
-            statement.execute(query);
             statementResults = statement.executeQuery(query);
 
             while (statementResults.next()) {
@@ -511,7 +508,6 @@ public class DatabaseAccess {
                         "ON Ca.CourseNumber = Co.CourseNumber " +
                         "WHERE Ca.CategoryName='" + cat + "' AND Co.DesignationName='" + des + "';";
                 Statement statement = connection.createStatement();
-                statement.execute(query);
                 ResultSet statementResults = statement.executeQuery(query);
                 while (statementResults.next()) {
                     Course c = new Course(statementResults.getString("CourseNumber"),
@@ -562,7 +558,6 @@ public class DatabaseAccess {
                         "   GROUP BY PRO.PName HAVING COUNT(*)>1) " +
                         "AND P_R.PRequirements = '" + ye + "';";
                 Statement statement = connection.createStatement();
-                statement.execute(query);
                 ResultSet statementResults = statement.executeQuery(query);
                 while (statementResults.next()) {
                     Project p = new Project(statementResults.getString("PName"),
@@ -592,7 +587,6 @@ public class DatabaseAccess {
         try {
             String query = "SELECT * FROM PROJECTS AS P WHERE P.PName = '" + title + "';";
             Statement statement = connection.createStatement();
-            statement.execute(query);
             ResultSet statementResults = statement.executeQuery(query);
 
             while (statementResults.next()) {
@@ -620,7 +614,6 @@ public class DatabaseAccess {
         try {
             String query = "SELECT * FROM COURSE AS C WHERE C.CourseName = '" + title + "';";
             Statement statement = connection.createStatement();
-            statement.execute(query);
             ResultSet statementResults = statement.executeQuery(query);
 
             while (statementResults.next()) {
@@ -650,7 +643,6 @@ public class DatabaseAccess {
                     "ON C.CourseNumber = Ca.CourseNumber " +
                     "WHERE C.CourseName = '" + name + "';";
             Statement statement = connection.createStatement();
-            statement.execute(query);
             ResultSet statementResults = statement.executeQuery(query);
 
             while (statementResults.next()) {
@@ -675,7 +667,6 @@ public class DatabaseAccess {
                     "ON P.PName = Pc.ProjectName " +
                     "WHERE P.PName = '" + name + "';";
             Statement statement = connection.createStatement();
-            statement.execute(query);
             ResultSet statementResults = statement.executeQuery(query);
 
             while (statementResults.next()) {
@@ -700,7 +691,6 @@ public class DatabaseAccess {
                     "ON P.PName = Pr.PName " +
                     "WHERE P.PName = '" + name + "';";
             Statement statement = connection.createStatement();
-            statement.execute(query);
             ResultSet statementResults = statement.executeQuery(query);
 
             while (statementResults.next()) {
@@ -721,7 +711,7 @@ public class DatabaseAccess {
     public void updateUserByEmail(String email, String major, int year) {
         try {
             String query = "UPDATE STUDENTS " +
-                    "SET MajorName='" + major + "', Year = '" + year + "'" +
+                    "SET MajorName='" + major + "', Year = '" + year + "' " +
                     "WHERE GTechEmail='" + email + "';";
             Statement statement = connection.createStatement();
             statement.execute(query);
@@ -794,6 +784,25 @@ public class DatabaseAccess {
             Log.e("QUERY", e.getMessage());
         }
         return res;
+    }
+
+    /**
+     * Update status for application
+     * @param pName name of project
+     * @param email email of student
+     * @param status new status
+     */
+    public void updateApplyStatusByProjectNameAndEmail(String pName, String email, String status) {
+        try {
+            String query = "UPDATE APPLY " +
+                    "SET Status = '" + status + "' " +
+                    "WHERE GTechEmail = '" + email + "' " +
+                    "AND ProjName = '" + pName + "';";
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+        } catch (SQLException e) {
+            Log.e("QUERY", e.getMessage());
+        }
     }
 
 
