@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@android:color/holo_orange_light"
+    android:background="#EDE3CE"
     tools:context="com.example.hungdo.team44phase3.AdminAppReport">
 
     <LinearLayout
@@ -17,22 +17,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            android:weightSum="1">
-            <TextView
-                android:text="Application Report"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:paddingLeft="20dp"
-                android:layout_weight="0.39"
-                android:paddingTop="3dp" />
-        </android.support.design.widget.AppBarLayout>
 
+        <TextView
+            android:text="Application Report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView13"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24sp"
+            android:textStyle="normal|bold"
+            android:gravity="center" />
 
 
 
@@ -43,44 +37,100 @@
             android:layout_marginTop="20dp">
 
             <TextView
-                android:text="Total: "
-                android:layout_width="40dp"
+                android:text="Total # of Applications: "
+                android:layout_width="wrap_content"
                 android:id="@+id/textView2"
                 android:layout_height="30dp"
                 android:textStyle="normal|bold"
                 />
 
             <TextView
-                android:layout_width="108dp"
+                android:layout_width="61dp"
                 android:text="..."
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:id="@+id/totalNum" />
+                android:id="@+id/totalApplication" />
 
             <TextView
-                android:text="Applied: "
+                android:text="Accepted: "
                 android:layout_width="71dp"
                 android:layout_height="30dp"
-                android:id="@+id/textView3"
                 android:layout_marginLeft="10dp"
                 android:textStyle="normal|bold" />
 
             <TextView
-                android:layout_width="108dp"
+                android:layout_width="44dp"
                 android:text="..."
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/appliedNum" />/>
+                android:id="@+id/accepted" />/>
 
         </LinearLayout>
 
-        <ListView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:id="@+id/listview"
-            android:background="@android:color/background_light" />
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="14"
+                android:background="@color/colorPrimary"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:text="Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:textSize="8sp"
+                    android:textColor="@android:color/background_light"
+                    android:textStyle="normal|bold"
+                    android:gravity="left|center_vertical" />
+
+                <TextView
+                    android:text="# apply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="8sp"
+                    android:textColor="@android:color/background_light"
+                    android:textStyle="normal|bold"
+                    android:gravity="left|center" />
+
+                <TextView
+                    android:text="% Accept"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:textSize="8sp"
+                    android:textColor="@android:color/background_light"
+                    android:textStyle="normal|bold"
+                    android:gravity="right|center"/>
+
+                <TextView
+                    android:text="Top 3 Majors"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8"
+                    android:textSize="8sp"
+                    android:textColor="@android:color/background_light"
+                    android:textStyle="normal|bold"
+                    android:gravity="right|center"/>
+            </LinearLayout>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/listReports"
+                android:background="@android:color/background_light" />
+        </LinearLayout>
 
     </LinearLayout>
 
