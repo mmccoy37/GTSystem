@@ -13,7 +13,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 import exception.DupplicateProjectName;
 import exception.NonUniqueEmailException;
@@ -450,6 +453,12 @@ public class DatabaseAccess {
                 error.show();
             }
         }
+        Collections.sort(res, new Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                return o1.toString().compareTo(o2.toString());
+            }
+        });
         Log.d("QUERY", "MainPage query results: " + res.toString());
         return res;
     }
@@ -489,6 +498,12 @@ public class DatabaseAccess {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        Collections.sort(listAll, new Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                return o1.toString().compareTo(o2.toString());
+            }
+        });
         return listAll;
     }
 
