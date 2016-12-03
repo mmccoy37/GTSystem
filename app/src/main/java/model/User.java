@@ -68,6 +68,17 @@ public class User {
     public int getYear() {
         return year;
     }
+    public String getYearString() {
+        if (year == 1) {
+            return YearLevel.FR.toString();
+        } else if (year == 2) {
+            return YearLevel.SO.toString();
+        } else if (year == 3) {
+            return YearLevel.JR.toString();
+        } else {
+            return YearLevel.SR.toString();
+        }
+    }
     public AccountType getAccountType() {
         return accountType;
     }
