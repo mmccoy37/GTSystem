@@ -48,8 +48,7 @@ public class AdminViewApp extends AppCompatActivity {
                                 apply.getEmail());
                         data.updateApplyStatusByProjectNameAndEmail(apply.getProjectName(),
                                 apply.getEmail(), "accepted");
-                        finish();
-                        startActivity(getIntent());
+                        listApplication.setAdapter(new AplicationAdapter(AdminViewApp.this, data.getALLApplies()));
                     }});
 
                 alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "REJECT", new DialogInterface.OnClickListener()    {
@@ -57,8 +56,7 @@ public class AdminViewApp extends AppCompatActivity {
                         Apply apply = (Apply) listApplication.getItemAtPosition(position);
                         data.updateApplyStatusByProjectNameAndEmail(apply.getProjectName(),
                                 apply.getEmail(), "rejected");
-                        finish();
-                        startActivity(getIntent());
+                        listApplication.setAdapter(new AplicationAdapter(AdminViewApp.this, data.getALLApplies()));
                     }});
                 alertDialog.show();  //<-- See This!
             }

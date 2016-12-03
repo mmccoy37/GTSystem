@@ -1,7 +1,10 @@
 package com.example.hungdo.team44phase3;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,6 +18,8 @@ import java.util.TimeZone;
 
 import database.DatabaseAccess;
 import exception.DupplicateProjectName;
+import listViewAdapter.AplicationAdapter;
+import model.Apply;
 import model.Project;
 import model.User;
 
@@ -54,9 +59,12 @@ public class ViewAndApplyProjectScreen extends Activity {
         }
 
         List<String> req = data.getListRequireByProjectName(p.getName());
-        String requirements = req.get(0);
+        String requirements = req.get(0) + " students only";
         for (int i = 1; i < req.size(); i++) {
-            requirements += ", " + req.get(i);
+            requirements += ", " + req.get(i) + " students only";
+        }
+        if (requirements.equals("null students only")) {
+            requirements = "No requirement";
         }
 
         String content = "Advisor: " + p.getAdvisor_Name() +
@@ -73,13 +81,26 @@ public class ViewAndApplyProjectScreen extends Activity {
 
     public void onClick(View v) {
         if (v.getId() == R.id.btnApply) {
-            try {
-                data.applyProject(u.getEmail(), p.getName(), currentDay);
-                Toast toast = Toast.makeText(this, "Apply Successful", Toast.LENGTH_SHORT);
-                toast.show();
-            } catch (DupplicateProjectName e) {
-                Toast toast = Toast.makeText(this, "You applied this project before!", Toast.LENGTH_SHORT);
-                toast.show();
+            User u = data.getUserByUserName(LoginActivity.USERNAME);
+            String major = u.getMajor();
+            if (major == null) {
+                AlertDialog alertDialog = new AlertDialog.Builder(ViewAndApplyProjectScreen.this).create(); //Read Update
+                alertDialog.setTitle("MISSING INFORMATION");
+                alertDialog.setMessage("You need to update your Major and Year first!");
+                alertDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }});
+                alertDialog.show();
+            } else {
+                try {
+                    data.applyProject(u.getEmail(), p.getName(), currentDay);
+                    Toast toast = Toast.makeText(this, "Apply Successful", Toast.LENGTH_SHORT);
+                    toast.show();
+                } catch (DupplicateProjectName e) {
+                    Toast toast = Toast.makeText(this, "You applied this project before!", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         }
     }

@@ -16,290 +16,289 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <android.support.design.widget.AppBarLayout
+        <TextView
+            android:text="Add New Project"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView12"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="normal|bold"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="6">
+
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:theme="@style/AppTheme.AppBarOverlay"
-                android:weightSum="1">
-                <TextView
-                    android:text="Add a Project"
+                android:layout_height="match_parent"
+                android:layout_weight="5">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                    android:paddingLeft="20dp"
-                    android:layout_weight="0.39"
-                    android:paddingTop="3dp" />
-            </android.support.design.widget.AppBarLayout>
-        </LinearLayout>
+                    android:orientation="vertical" >
 
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
-
-                        <TextView
-                            android:text="Name: "
-                            android:layout_width="wrap_content"
-                            android:id="@+id/textView01"
-                            android:textSize="20dp"
-                            android:layout_height="50dp"
-                            android:textStyle="normal|bold"/>
-
-                        <EditText
+                        <LinearLayout
+                            android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:ems="10"
-                            android:id="@+id/editProjectName"
-                            android:background="?android:attr/actionModeBackground" />
+                            android:layout_marginTop="10dp">
 
-                    </LinearLayout>
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
+                            <TextView
+                                android:text="Name: "
+                                android:layout_width="wrap_content"
+                                android:id="@+id/textView01"
+                                android:textSize="20dp"
+                                android:layout_height="50dp"
+                                android:textStyle="normal|bold"/>
 
-                        <TextView
-                            android:text="Advisor: "
-                            android:layout_width="wrap_content"
-                            android:id="@+id/textView2"
-                            android:textSize="20dp"
-                            android:layout_height="50dp"
-                            android:textStyle="normal|bold"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:ems="10"
+                                android:id="@+id/editProjectName"
+                                android:background="?android:attr/actionModeBackground" />
 
-                        <EditText
+                        </LinearLayout>
+                        <LinearLayout
+                            android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:ems="10"
-                            android:id="@+id/editProjectAdv"
-                            android:background="?android:attr/actionModeBackground" />
+                            android:layout_marginTop="10dp">
 
-                    </LinearLayout>
+                            <TextView
+                                android:text="Advisor: "
+                                android:layout_width="wrap_content"
+                                android:id="@+id/textView2"
+                                android:textSize="20dp"
+                                android:layout_height="50dp"
+                                android:textStyle="normal|bold"/>
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp">
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:ems="10"
+                                android:id="@+id/editProjectAdv"
+                                android:background="?android:attr/actionModeBackground" />
 
-                        <TextView
-                            android:text="Advisor Email: "
-                            android:layout_width="wrap_content"
-                            android:id="@+id/textView3"
-                            android:textSize="20dp"
-                            android:layout_height="50dp"
-                            android:textStyle="normal|bold"/>
+                        </LinearLayout>
 
-                        <EditText
+                        <LinearLayout
+                            android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textEmailAddress"
-                            android:ems="10"
-                            android:id="@+id/editProjectAdvEm"
-                            android:background="?android:attr/actionModeBackground" />
+                            android:layout_marginTop="5dp">
 
-                    </LinearLayout>
+                            <TextView
+                                android:text="Advisor Email: "
+                                android:layout_width="wrap_content"
+                                android:id="@+id/textView3"
+                                android:textSize="20dp"
+                                android:layout_height="50dp"
+                                android:textStyle="normal|bold"/>
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp">
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textEmailAddress"
+                                android:ems="10"
+                                android:id="@+id/editProjectAdvEm"
+                                android:background="?android:attr/actionModeBackground" />
 
-                        <TextView
-                            android:text="Description: "
-                            android:layout_width="wrap_content"
-                            android:id="@+id/textView4"
-                            android:textSize="20dp"
-                            android:layout_height="50dp"
-                            android:textStyle="normal|bold"/>
+                        </LinearLayout>
 
-                        <EditText
+                        <LinearLayout
+                            android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:ems="10"
-                            android:id="@+id/editProjectDesc"
-                            android:background="?android:attr/actionModeBackground" />
+                            android:layout_marginTop="5dp">
 
-                    </LinearLayout>
+                            <TextView
+                                android:text="Description: "
+                                android:layout_width="wrap_content"
+                                android:id="@+id/textView4"
+                                android:textSize="20dp"
+                                android:layout_height="50dp"
+                                android:textStyle="normal|bold"/>
 
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:ems="10"
+                                android:id="@+id/editProjectDesc"
+                                android:background="?android:attr/actionModeBackground" />
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp">
-
-                        <TextView
-                            android:text="Designation: "
-                            android:layout_width="wrap_content"
-                            android:id="@+id/textView5"
-                            android:textSize="20dp"
-                            android:layout_height="50dp"
-                            android:textStyle="normal|bold"/>
-
-                        <Spinner
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="20dp"
-                            android:id="@+id/designationSpinnerProj"
-                            android:layout_height="40dp"
-                            android:layout_marginRight="30dp"/>
-
-                    </LinearLayout>
+                        </LinearLayout>
 
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp">
-                        android:weightSum="1">
-
-                        <TextView
-                            android:text="Category: "
-                            android:layout_width="wrap_content"
-                            android:id="@+id/textView6"
-                            android:textSize="20dp"
-                            android:layout_height="50dp"
-                            android:textStyle="normal|bold"/>
-
-                        <model.MultiSelectionSpinner
-                            android:layout_width="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:id="@+id/categorySpinnerProj"
-                            android:layout_height="40dp"
-                            />
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp">
-
-                        <TextView
-                            android:text="Estimated # of students: "
-                            android:layout_width="wrap_content"
-                            android:id="@+id/textView7"
-                            android:textSize="20dp"
-                            android:layout_height="50dp"
-                            android:textStyle="normal|bold"/>
-
-                        <EditText
+                        <LinearLayout
+                            android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:id="@+id/editProjNumStudent"
-                            android:background="?android:attr/actionModeBackground"
-                            android:inputType="number"/>
+                            android:layout_marginTop="5dp">
 
-                    </LinearLayout>
+                            <TextView
+                                android:text="Designation: "
+                                android:layout_width="wrap_content"
+                                android:id="@+id/textView5"
+                                android:textSize="20dp"
+                                android:layout_height="50dp"
+                                android:textStyle="normal|bold"/>
+
+                            <Spinner
+                                android:layout_width="match_parent"
+                                android:layout_marginLeft="20dp"
+                                android:id="@+id/designationSpinnerProj"
+                                android:layout_height="40dp"
+                                android:layout_marginRight="30dp"/>
+
+                        </LinearLayout>
 
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp">
-
-                        <TextView
-                            android:text="Major Requirement: "
-                            android:layout_width="wrap_content"
-                            android:textSize="20dp"
-                            android:layout_height="50dp"
-                            android:textStyle="normal|bold"/>
-
-                        <Spinner
+                        <LinearLayout
+                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_marginLeft="20dp"
-                            android:id="@+id/projMajorReqSpinner"
-                            android:layout_height="40dp"
-                            android:layout_marginRight="30dp"/>
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+                            android:weightSum="1">
 
-                    </LinearLayout>
+                            <TextView
+                                android:text="Category: "
+                                android:layout_width="wrap_content"
+                                android:id="@+id/textView6"
+                                android:textSize="20dp"
+                                android:layout_height="50dp"
+                                android:textStyle="normal|bold"/>
+
+                            <model.MultiSelectionSpinner
+                                android:layout_width="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:id="@+id/categorySpinnerProj"
+                                android:layout_height="40dp"
+                                />
+
+                        </LinearLayout>
 
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp">
-
-                        <TextView
-                            android:text="Year Requirement: "
-                            android:layout_width="wrap_content"
-                            android:textSize="20dp"
-                            android:layout_height="50dp"
-                            android:textStyle="normal|bold"/>
-
-                        <Spinner
+                        <LinearLayout
+                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_marginLeft="20dp"
-                            android:id="@+id/projYearReqSpinner"
-                            android:layout_height="40dp"
-                            android:layout_marginRight="30dp"/>
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
 
-                    </LinearLayout>
+                            <TextView
+                                android:text="Estimated # of students: "
+                                android:layout_width="wrap_content"
+                                android:id="@+id/textView7"
+                                android:textSize="20dp"
+                                android:layout_height="50dp"
+                                android:textStyle="normal|bold"/>
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp">
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:id="@+id/editProjNumStudent"
+                                android:background="?android:attr/actionModeBackground"
+                                android:inputType="number"/>
 
-                        <TextView
-                            android:text="Department Requirement: "
-                            android:layout_width="wrap_content"
-                            android:textSize="20dp"
-                            android:layout_height="50dp"
-                            android:textStyle="normal|bold"/>
+                        </LinearLayout>
 
-                        <Spinner
+
+                        <LinearLayout
+                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_marginLeft="20dp"
-                            android:id="@+id/projDepReqSpinner"
-                            android:layout_height="40dp"
-                            android:layout_marginRight="30dp"/>
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
 
-                    </LinearLayout>
+                            <TextView
+                                android:text="Major Requirement: "
+                                android:layout_width="wrap_content"
+                                android:textSize="20dp"
+                                android:layout_height="50dp"
+                                android:textStyle="normal|bold"/>
 
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:text="Submit"
-                        android:id="@+id/projButton"
-                        android:textColor="@android:color/background_light"
-                        android:textSize="18sp"
-                        android:textStyle="normal|bold"
-                        android:background="@drawable/button_background"
-                        android:textColorLink="@android:color/background_light"
-                        android:textColorHint="@android:color/holo_orange_dark" />
+                            <Spinner
+                                android:layout_width="match_parent"
+                                android:layout_marginLeft="20dp"
+                                android:id="@+id/projMajorReqSpinner"
+                                android:layout_height="40dp"
+                                android:layout_marginRight="30dp"/>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                android:text="Year Requirement: "
+                                android:layout_width="wrap_content"
+                                android:textSize="20dp"
+                                android:layout_height="50dp"
+                                android:textStyle="normal|bold"/>
+
+                            <Spinner
+                                android:layout_width="match_parent"
+                                android:layout_marginLeft="20dp"
+                                android:id="@+id/projYearReqSpinner"
+                                android:layout_height="40dp"
+                                android:layout_marginRight="30dp"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                android:text="Department Requirement: "
+                                android:layout_width="wrap_content"
+                                android:textSize="20dp"
+                                android:layout_height="50dp"
+                                android:textStyle="normal|bold"/>
+
+                            <Spinner
+                                android:layout_width="match_parent"
+                                android:layout_marginLeft="20dp"
+                                android:id="@+id/projDepReqSpinner"
+                                android:layout_height="40dp"
+                                android:layout_marginRight="30dp"/>
+
+                        </LinearLayout>
 
                 </LinearLayout>
-        </ScrollView>
+            </ScrollView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Submit"
+                android:layout_weight="1"
+                android:id="@+id/projButton"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                android:textStyle="normal|bold"
+                android:background="@drawable/button_background"
+                android:textColorLink="@android:color/background_light"
+                android:textColorHint="@android:color/holo_orange_dark" />
+
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>
 
