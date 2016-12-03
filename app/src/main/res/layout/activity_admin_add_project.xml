@@ -56,6 +56,29 @@
                         android:layout_marginTop="10dp">
 
                         <TextView
+                            android:text="Name: "
+                            android:layout_width="wrap_content"
+                            android:id="@+id/textView01"
+                            android:textSize="20dp"
+                            android:layout_height="50dp"
+                            android:textStyle="normal|bold"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:ems="10"
+                            android:id="@+id/editProjectName"
+                            android:background="?android:attr/actionModeBackground" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
                             android:text="Advisor: "
                             android:layout_width="wrap_content"
                             android:id="@+id/textView2"
@@ -68,7 +91,7 @@
                             android:layout_height="wrap_content"
                             android:inputType="text"
                             android:ems="10"
-                            android:id="@+id/editCourseNum"
+                            android:id="@+id/editProjectAdv"
                             android:background="?android:attr/actionModeBackground" />
 
                     </LinearLayout>
@@ -90,9 +113,9 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
+                            android:inputType="textEmailAddress"
                             android:ems="10"
-                            android:id="@+id/editCourseName"
+                            android:id="@+id/editProjectAdvEm"
                             android:background="?android:attr/actionModeBackground" />
 
                     </LinearLayout>
@@ -116,7 +139,7 @@
                             android:layout_height="wrap_content"
                             android:inputType="text"
                             android:ems="10"
-                            android:id="@+id/editInstructor"
+                            android:id="@+id/editProjectDesc"
                             android:background="?android:attr/actionModeBackground" />
 
                     </LinearLayout>
@@ -139,7 +162,7 @@
                         <Spinner
                             android:layout_width="match_parent"
                             android:layout_marginLeft="20dp"
-                            android:id="@+id/designationSpinner"
+                            android:id="@+id/designationSpinnerProj"
                             android:layout_height="40dp"
                             android:layout_marginRight="30dp"/>
 
@@ -161,20 +184,12 @@
                             android:layout_height="50dp"
                             android:textStyle="normal|bold"/>
 
-                        <Spinner
+                        <model.MultiSelectionSpinner
                             android:layout_width="wrap_content"
                             android:layout_marginLeft="20dp"
-                            android:id="@+id/categorySpinner"
+                            android:id="@+id/categorySpinnerProj"
                             android:layout_height="40dp"
                             />
-
-                        <TextView
-                            android:text="Add a new Category"
-                            android:layout_width="wrap_content"
-                            android:textSize="10dp"
-                            android:layout_height="50dp"
-                            android:textColor="@drawable/text_color"
-                            android:textStyle="normal|bold"/>
 
                     </LinearLayout>
 
@@ -196,10 +211,10 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="numberDecimal"
                             android:ems="10"
-                            android:id="@+id/editNumStudent"
-                            android:background="?android:attr/actionModeBackground" />
+                            android:id="@+id/editProjNumStudent"
+                            android:background="?android:attr/actionModeBackground"
+                            android:inputType="number"/>
 
                     </LinearLayout>
 
@@ -220,7 +235,7 @@
                         <Spinner
                             android:layout_width="match_parent"
                             android:layout_marginLeft="20dp"
-                            android:id="@+id/MajorReqSpinner"
+                            android:id="@+id/projMajorReqSpinner"
                             android:layout_height="40dp"
                             android:layout_marginRight="30dp"/>
 
@@ -243,7 +258,7 @@
                         <Spinner
                             android:layout_width="match_parent"
                             android:layout_marginLeft="20dp"
-                            android:id="@+id/YearReqSpinner"
+                            android:id="@+id/projYearReqSpinner"
                             android:layout_height="40dp"
                             android:layout_marginRight="30dp"/>
 
@@ -265,7 +280,7 @@
                         <Spinner
                             android:layout_width="match_parent"
                             android:layout_marginLeft="20dp"
-                            android:id="@+id/DepReqSpinner"
+                            android:id="@+id/projDepReqSpinner"
                             android:layout_height="40dp"
                             android:layout_marginRight="30dp"/>
 
@@ -275,6 +290,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:text="Submit"
+                        android:id="@+id/projButton"
                         android:textColor="@android:color/background_light"
                         android:textSize="18sp"
                         android:textStyle="normal|bold"

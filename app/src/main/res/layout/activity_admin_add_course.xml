@@ -59,7 +59,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
+                android:inputType="textCapCharacters"
                 android:ems="10"
                 android:id="@+id/editCourseNum"
                 android:background="?android:attr/actionModeBackground" />
@@ -83,7 +83,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="textCapWords"
                 android:ems="10"
                 android:id="@+id/editCourseName"
                 android:background="?android:attr/actionModeBackground" />
@@ -107,10 +107,10 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
                 android:ems="10"
                 android:id="@+id/editInstructor"
-                android:background="?android:attr/actionModeBackground" />
+                android:background="?android:attr/actionModeBackground"
+                android:inputType="textCapWords"/>
 
         </LinearLayout>
 
@@ -154,7 +154,7 @@
                 android:layout_height="50dp"
                 android:textStyle="normal|bold"/>
 
-            <Spinner
+            <model.MultiSelectionSpinner
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:id="@+id/categorySpinner"
@@ -189,7 +189,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:ems="10"
                 android:id="@+id/editNumStudent"
                 android:background="?android:attr/actionModeBackground" />
@@ -205,7 +205,8 @@
             android:textStyle="normal|bold"
             android:background="@drawable/button_background"
             android:textColorLink="@android:color/background_light"
-            android:textColorHint="@android:color/holo_orange_dark" />
+            android:textColorHint="@android:color/holo_orange_dark"
+            android:id="@+id/CourseSubmitNew"/>
 
     </LinearLayout>
 
