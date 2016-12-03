@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import database.DatabaseAccess;
+import listViewAdapter.CourseOrProjectAdapter;
 import model.Course;
 import model.MultiSelectionSpinner;
 import model.Project;
@@ -75,8 +76,7 @@ public class UserScreen extends Activity {
 
         // Setup ListView
         listView = (ListView) findViewById(R.id.listview);
-        listView.setAdapter(new ArrayAdapter<Object>(context, android.R.layout.simple_list_item_1,
-                data.getAllCourseAndProject()));
+        listView.setAdapter(new CourseOrProjectAdapter(this, data.getAllCourseAndProject()));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

@@ -27,13 +27,25 @@
             android:textSize="30sp"
             android:layout_marginBottom="20dp" />
 
-        <TextView
-            android:text="Content"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/projectContent"
-            android:layout_marginBottom="56dp"
-            android:textSize="24sp" />
+            android:layout_marginBottom="55dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:text="Content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/projectContent"
+                    android:layout_marginBottom="56dp"
+                    android:textSize="24sp" />
+            </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 

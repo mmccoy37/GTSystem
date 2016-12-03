@@ -28,9 +28,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/textView"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:paddingLeft="20dp"
                 android:layout_weight="0.39"
-                android:paddingTop="3dp" />
+                android:gravity="center" />
         </android.support.design.widget.AppBarLayout>
 
 
@@ -40,28 +39,7 @@
             android:id="@+id/listMyApp"
             android:background="@android:color/background_light"
             android:layout_width="wrap_content"
-            android:layout_height="380dp" />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
-
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="120dp"
-            android:id="@+id/AcceptBtn"
-            android:text="Accept" />
-
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:id="@+id/RejectBtn"
-            android:text="Reject" />
-
-    </LinearLayout>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </RelativeLayout>

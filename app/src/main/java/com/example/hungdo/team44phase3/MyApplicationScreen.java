@@ -14,20 +14,27 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.DatabaseAccess;
+import listViewAdapter.ApplyAdapter;
 import model.MultiSelectionSpinner;
+import model.User;
 
 public class MyApplicationScreen extends Activity {
 
     private ListView listMyApp;
+    private DatabaseAccess data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myapp);
+        data = DatabaseAccess.getDatabaseAccess();
+        data.setContext(this);
+
+        User u = data.getUserByUserName(LoginActivity.USERNAME);
 
         listMyApp = (ListView) findViewById(R.id.listMyApp);
-
-
+        listMyApp.setAdapter(new ApplyAdapter(this, data.getAppliesByEmail(u.getEmail())));
     }
 
 }

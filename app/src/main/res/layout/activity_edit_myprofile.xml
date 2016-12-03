@@ -103,7 +103,7 @@
                 android:textColor="@android:color/holo_orange_light"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="189dp"
                 android:text="CS"
                 android:layout_marginRight="60dp"
                 android:id="@+id/deptTxt"
@@ -111,7 +111,7 @@
                 android:textSize="18sp"
                 android:layout_height="56dp"
                 android:textAlignment="viewEnd"
-                android:layout_weight="0.63" />
+                android:gravity="left" />
 
         </LinearLayout>
 

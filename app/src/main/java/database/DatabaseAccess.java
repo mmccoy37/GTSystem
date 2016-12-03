@@ -18,6 +18,7 @@ import java.util.List;
 import exception.DupplicateProjectName;
 import exception.NonUniqueEmailException;
 import exception.NonUniqueUserNameException;
+import model.Apply;
 import model.Course;
 import model.Project;
 import model.User;
@@ -91,7 +92,6 @@ public class DatabaseAccess {
      */
     public User getUserByUserName(String username) {
         try {
-
             String query = "SELECT U.username, U.password, " +
                     "S.GTechEmail, S.majorName, S.year, U.type " +
                     "FROM USERS AS U " +
@@ -99,9 +99,7 @@ public class DatabaseAccess {
                     "ON U.Username=S.Username " +
                     "WHERE U.username='" + username + "';";
             Statement statement = connection.createStatement();
-
             ResultSet statementResults = statement.executeQuery(query);
-
             if (statementResults.next()) {
                 User user = new User(
                         statementResults.getString(1),
@@ -113,14 +111,44 @@ public class DatabaseAccess {
                 );
                 return user;
             }
-
             return null;
-
         } catch (SQLException e) {
-
             System.out.println("Could not connect to the database: " + e.getMessage());
         }
+        return null;
+    }
 
+    /**
+     * returns the user with the given email in the system if one exists
+     * Null otherwise
+     * @param email the username of the User that will be returned
+     * @return User the user that matches the given username
+     */
+    public User getUserByEmail(String email) {
+        try {
+            String query = "SELECT U.username, U.password, " +
+                    "S.GTechEmail, S.majorName, S.year, U.type " +
+                    "FROM USERS AS U " +
+                    "LEFT JOIN STUDENTS AS S " +
+                    "ON U.Username=S.Username " +
+                    "WHERE S.GTechEmail='" + email + "';";
+            Statement statement = connection.createStatement();
+            ResultSet statementResults = statement.executeQuery(query);
+            if (statementResults.next()) {
+                User user = new User(
+                        statementResults.getString(1),
+                        statementResults.getString(2),
+                        statementResults.getString(3),
+                        statementResults.getString(4),
+                        statementResults.getInt(5),
+                        statementResults.getInt(6)
+                );
+                return user;
+            }
+            return null;
+        } catch (SQLException e) {
+            System.out.println("Could not connect to the database: " + e.getMessage());
+        }
         return null;
     }
 
@@ -491,7 +519,9 @@ public class DatabaseAccess {
                             statementResults.getInt("EstimatedStudentNum"),
                             statementResults.getString("Instructor"),
                             statementResults.getString("DesignationName"));
-                    res.add(c);
+                    if (!res.contains(c)) {
+                        res.add(c);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -541,7 +571,9 @@ public class DatabaseAccess {
                             statementResults.getString("AdvisorName"),
                             statementResults.getString("AdvisorEmail"),
                             statementResults.getString("Designation"));
-                    res.add(p);
+                    if (!res.contains(p)) {
+                        res.add(p);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -723,6 +755,46 @@ public class DatabaseAccess {
         }
     }
 
+    /**
+     * get all applies from database
+     * @return
+     */
+    public List<Apply> getALLApplies() {
+        List<Apply> res = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM APPLY");
+            while (rs.next()) {
+                Apply ap = new Apply(rs.getString("GTechEmail"), rs.getString("ProjName"),
+                        rs.getString("Date"), rs.getString("Status"));
+                res.add(ap);
+            }
+        } catch (SQLException e) {
+            Log.e("QUERY", e.getMessage());
+        }
+        return res;
+    }
+
+    /**
+     * get applies from database by Email
+     * @return
+     */
+    public List<Apply> getAppliesByEmail(String email) {
+        List<Apply> res = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM APPLY " +
+                    "WHERE GTechEmail = '" + email + "';");
+            while (rs.next()) {
+                Apply ap = new Apply(rs.getString("GTechEmail"), rs.getString("ProjName"),
+                        rs.getString("Date"), rs.getString("Status"));
+                res.add(ap);
+            }
+        } catch (SQLException e) {
+            Log.e("QUERY", e.getMessage());
+        }
+        return res;
+    }
 
 
 

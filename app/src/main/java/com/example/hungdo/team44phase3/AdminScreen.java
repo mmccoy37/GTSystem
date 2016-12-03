@@ -22,6 +22,12 @@ public class AdminScreen extends AppCompatActivity {
 
         TextView viewAppReport = (TextView) findViewById(R.id.btnViewAppReport);
         viewAppReport.setPaintFlags(viewAppReport.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+
+        TextView addCourse = (TextView) findViewById(R.id.btnAddCourse);
+        addCourse.setPaintFlags(viewAppReport.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+
+        TextView addProject = (TextView) findViewById(R.id.btnAddProject);
+        addProject.setPaintFlags(viewAppReport.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
     }
 
     public void onClick(View v) {
