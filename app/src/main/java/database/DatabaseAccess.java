@@ -15,8 +15,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 
 import exception.DupplicateProjectName;
 import exception.NonUniqueEmailException;
@@ -820,12 +823,53 @@ public class DatabaseAccess {
         }
     }
 
+    public Map<String, Integer> getListAppliesWithNumberOfApplicant() {
+        HashMap<String, Integer> list = new HashMap<>();
+        for (Apply apply: getALLApplies()) {
+            if (!list.containsKey(apply.getProjectName())) {
+                list.put(apply.getProjectName(), 1);
+            } else {
+                list.put(apply.getProjectName(), list.get(apply.getProjectName()) + 1);
+            }
+        }
+        TreeMap<String, Integer> sortedMap = sortMapByValue(list);
+        return sortedMap;
+    }
 
 
 
 
 
 
+
+    private TreeMap<String, Integer> sortMapByValue(HashMap<String, Integer> map){
+        Comparator<String> comparator = new ValueComparator(map);
+        //TreeMap is a map sorted by its keys.
+        //The comparator is used to sort the TreeMap by keys.
+        TreeMap<String, Integer> result = new TreeMap<String, Integer>(comparator);
+        result.putAll(map);
+        return result;
+    }
+
+    private class ValueComparator implements Comparator<String>{
+
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+
+        public ValueComparator(HashMap<String, Integer> map){
+            this.map.putAll(map);
+        }
+
+        @Override
+        public int compare(String s1, String s2) {
+            if(map.get(s1) > map.get(s2)){
+                return -1;
+            } else if (map.get(s1) < map.get(s2)){
+                return 1;
+            } else {
+                return s1.compareTo(s2);
+            }
+        }
+    }
 
 
 
