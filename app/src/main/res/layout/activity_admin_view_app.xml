@@ -5,11 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
 
     tools:context="com.example.hungdo.team44phase3.AdminViewApp"
-    android:paddingLeft="6dp"
-    android:paddingRight="6dp"
-    android:paddingTop="6dp"
-    android:paddingBottom="6dp"
-    android:background="?attr/colorButtonNormal">
+    android:background="#EDE3CE">
 
     <LinearLayout
         android:orientation="vertical"
