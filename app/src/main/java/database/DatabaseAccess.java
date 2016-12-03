@@ -161,15 +161,14 @@ public class DatabaseAccess {
                         ");";
                 statement = connection.createStatement();
                 statement.execute(query);
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                connection.commit();
+            } catch (SQLException s) {
+                System.out.println(s.getMessage());
                 try {
-                    String query = "DELETE FROM USERS " +
-                            "WHERE Username = '" + username + "';";
-                    Statement statement = connection.createStatement();
-                    statement.execute(query);
-                } catch (SQLException s) {
-                    System.out.println(s.getMessage());
+                    connection.rollback();
+                    Log.i("SQL", "rolled back due to SQL query error.");
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
                 throw new NonUniqueEmailException();
 
@@ -177,6 +176,16 @@ public class DatabaseAccess {
         }
     }
 
+    /**
+     * adds a new course to the database as well as the course_requirements
+     * @param cnum course number
+     * @param cname course name
+     * @param cstudents estimated # of students
+     * @param cinstr course instructor
+     * @param designation course designation
+     * @param ccategory course categories
+     * @return result
+     */
     public String addNewCourse(String cnum, String cname, String cstudents, String cinstr,
                                String designation, List<String> ccategory) {
         cnum = cnum.toUpperCase();
@@ -197,14 +206,86 @@ public class DatabaseAccess {
                 statement = connection.createStatement();
                 statement.execute(query);
             }
+            connection.commit();
         } catch (SQLException s) {
             Log.e("SQL", s.getMessage());
+            try {
+                connection.rollback();
+                Log.i("SQL", "rolled back due to SQL query error.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             return s.getMessage();
         } catch (Exception e) {
             Log.e("DATA", e.getMessage());
             return e.getMessage();
         }
         return "Course '" + cname + "' added!";
+    }
+
+    public String addNewProject(
+            String pname,String pEstStudent, String pdesc, String padv,
+            String pemail, String pdesignation, String pyear, String pmajor,
+            String pdept, List<String> pcategories) {
+        try {
+            //project basic info
+            String query = "INSERT INTO PROJECTS (" +
+                    "PName, EstimatedStudents, Description, AdvisorName, AdvisorEmail, Designation)" +
+                    "VALUES (" +
+                    "'" +pname + "', " +
+                    "'" + pEstStudent + "', " +
+                    "'" + pdesc + "'," +
+                    "'" + padv + "', " +
+                    "'" + pemail + "', " +
+                    "'" + pdesignation + "');";
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+            //categories
+            for (String s : pcategories) {
+                query = "INSERT INTO PROJ_CATEGORY (CategoryName, ProjectName) VALUES (" +
+                        "'" + s + "', '" + pname + "');";
+                statement = connection.createStatement();
+                statement.execute(query);
+            }
+            //year requirement
+            if (!pyear.equals("")) {
+                query = "INSERT INTO PROJ_REQUIREMENTS (PName, PRequirements) VALUES(" +
+                        "'" + pname + "', " +
+                        "'" + pyear + "');";
+                statement = connection.createStatement();
+                statement.execute(query);
+            }
+            //major reuirement
+            if (!pmajor.equals("")) {
+                query = "INSERT INTO PROJ_REQUIREMENTS (PName, PRequirements) VALUES(" +
+                        "'" + pname + "', " +
+                        "'" + pmajor + "');";
+                statement = connection.createStatement();
+                statement.execute(query);
+            }
+            //department requirement
+            if (!pdept.equals("")) {
+                query = "INSERT INTO PROJ_REQUIREMENTS (PName, PRequirements) VALUES(" +
+                        "'" + pname + "', " +
+                        "'" + pdept + "');";
+                statement = connection.createStatement();
+                statement.execute(query);
+            }
+            connection.commit();
+        } catch (SQLException s) {
+            Log.e("SQL", s.getMessage());
+            try {
+                connection.rollback();
+                Log.i("SQL", "rolled back due to SQL query error.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return s.getMessage();
+        } catch (Exception e) {
+            Log.e("DATA", e.getMessage());
+            return e.getMessage();
+        }
+        return "Project '" + pname + "' added!";
     }
 
     /**
@@ -249,6 +330,20 @@ public class DatabaseAccess {
         return categories;
     }
 
+
+    public ArrayList<String> getDepartments() {
+        ArrayList<String> depts = new ArrayList<>();
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM DEPARTMENT");
+            while (rs.next()) {
+                depts.add(rs.getString("Name"));
+            }
+        } catch (SQLException s) {
+            Log.e("QUERT", s.getMessage());
+        }
+        return depts;
+    }
     /**
      * get designations from db
      * @return
@@ -612,7 +707,7 @@ public class DatabaseAccess {
                 connection = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Team_44",
                         "cs4400_Team_44",
                         "eAO5XaBD");
-
+                connection.setAutoCommit(false);
                 if(!connection.isClosed())
                     System.out.println("Successfully connected to " +
                             "MySQL server using TCP/IP...");
