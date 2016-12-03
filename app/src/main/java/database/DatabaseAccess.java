@@ -27,6 +27,7 @@ import exception.NonUniqueUserNameException;
 import model.Apply;
 import model.Course;
 import model.Project;
+import model.Report;
 import model.User;
 
 /**
@@ -785,7 +786,7 @@ public class DatabaseAccess {
 
     /**
      * get applies from database by Email
-     * @return
+     * @return list of application
      */
     public List<Apply> getAppliesByEmail(String email) {
         List<Apply> res = new ArrayList<>();
@@ -823,6 +824,57 @@ public class DatabaseAccess {
         }
     }
 
+    /**
+     * get applies from database by Email
+     * @return list of application
+     */
+    public List<Apply> getListApplyByProjectname(String pName) {
+        List<Apply> res = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM APPLY " +
+                    "WHERE ProjName = '" + pName + "';");
+            while (rs.next()) {
+                Apply ap = new Apply(rs.getString("GTechEmail"), rs.getString("ProjName"),
+                        rs.getString("Date"), rs.getString("Status"));
+                res.add(ap);
+            }
+        } catch (SQLException e) {
+            Log.e("QUERY", e.getMessage());
+        }
+        return res;
+    }
+
+    /**
+     * Get list of all reports
+     * @return list of reports
+     */
+    public List<Report> getAllListReport() {
+        List<Report> res = new ArrayList<>();
+        Map<String, Integer> mapApplies = getListAppliesWithNumberOfApplicant();
+        for (Map.Entry<String, Integer> m: mapApplies.entrySet()) {
+            Report r = new Report(m.getKey());
+            res.add(r);
+        }
+        Collections.sort(res, new Comparator<Report>() {
+            @Override
+            public int compare(Report o1, Report o2) {
+                if (o1.getRate() > o2.getRate()) {
+                    return -1;
+                } else if (o1.getRate() < o2.getRate()) {
+                    return 1;
+                } else {
+                    return o1.getProjectName().compareTo(o2.getProjectName());
+                }
+            }
+        });
+        return res;
+    }
+
+    /**
+     * Get map list of prject name with #of applicant
+     * @return Map
+     */
     public Map<String, Integer> getListAppliesWithNumberOfApplicant() {
         HashMap<String, Integer> list = new HashMap<>();
         for (Apply apply: getALLApplies()) {
@@ -837,12 +889,12 @@ public class DatabaseAccess {
     }
 
 
-
-
-
-
-
-    private TreeMap<String, Integer> sortMapByValue(HashMap<String, Integer> map){
+    /**
+     * Sort HashMap
+     * @param map hashmap
+     * @return TreeMap
+     */
+    public TreeMap<String, Integer> sortMapByValue(HashMap<String, Integer> map){
         Comparator<String> comparator = new ValueComparator(map);
         //TreeMap is a map sorted by its keys.
         //The comparator is used to sort the TreeMap by keys.
@@ -852,13 +904,10 @@ public class DatabaseAccess {
     }
 
     private class ValueComparator implements Comparator<String>{
-
         HashMap<String, Integer> map = new HashMap<String, Integer>();
-
         public ValueComparator(HashMap<String, Integer> map){
             this.map.putAll(map);
         }
-
         @Override
         public int compare(String s1, String s2) {
             if(map.get(s1) > map.get(s2)){

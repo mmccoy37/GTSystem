@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:weightSum="14">
+
+    <TextView
+        android:text="Project Name"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:id="@+id/PName"
+        android:layout_weight="3"
+        android:textSize="8sp"
+        android:textColor="@android:color/black"
+        android:gravity="left|center" />
+
+    <TextView
+        android:text="Applicant Major"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:id="@+id/numApplication"
+        android:layout_weight="1"
+        android:textSize="8sp"
+        android:textColor="@android:color/black"
+        android:gravity="left|center"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:text="Applicant Year"
+        android:layout_width="0dp"
+        android:id="@+id/rate"
+        android:layout_weight="2"
+        android:textSize="8sp"
+        android:textColor="@android:color/black"
+        android:gravity="right|center"
+        android:layout_height="50dp" />
+
+    <TextView
+        android:text="Status"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:id="@+id/topMajors"
+        android:layout_weight="8"
+        android:textSize="8sp"
+        android:textColor="@android:color/black"
+        android:gravity="right|center"/>
+
+</LinearLayout>
