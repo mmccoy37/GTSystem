@@ -23,10 +23,11 @@ import model.User;
 
 public class LoginActivity extends AppCompatActivity {
 
-    DatabaseAccess data;
+    private DatabaseAccess data;
     private TextView reg;
     private EditText uname;
     private EditText password;
+    public static String USERNAME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     data.setUser(u);
                     if (u.getAccountType().equals(AccountType.STUDENT)) {
+                        USERNAME = u.getUsername();
                         startActivity(new Intent(this, UserScreen.class));
                     } else {
                         startActivity(new Intent(this, AdminScreen.class));

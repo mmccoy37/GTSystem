@@ -38,7 +38,7 @@
     </LinearLayout>
 
     <Button
-        android:text="APPLY"
+        android:text="APPLY PROJECT"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnApply"
@@ -47,5 +47,6 @@
         android:layout_marginRight="40dp"
         android:background="@drawable/button_background"
         android:textColor="@android:color/background_light"
-        android:textStyle="normal|bold" />
+        android:textStyle="normal|bold"
+        android:onClick="onClick" />
 </RelativeLayout>
