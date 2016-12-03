@@ -47,7 +47,6 @@ public class CourseOrProjectAdapter extends BaseAdapter {
     private class ViewHolder {
         TextView txtFirst;
         TextView txtSecond;
-        TextView txtThird;
     }
 
     @Override
