@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import database.DatabaseAccess;
+import listViewAdapter.CourseOrProjectAdapter;
 import model.Course;
 import model.MultiSelectionSpinner;
 import model.Project;
@@ -75,8 +76,7 @@ public class UserScreen extends Activity {
 
         // Setup ListView
         listView = (ListView) findViewById(R.id.listview);
-        listView.setAdapter(new ArrayAdapter<Object>(context, android.R.layout.simple_list_item_1,
-                data.getAllCourseAndProject()));
+        listView.setAdapter(new CourseOrProjectAdapter(this, data.getAllCourseAndProject()));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -187,7 +187,7 @@ public class UserScreen extends Activity {
                 CATEGORY = spinnerCat.getSelectedStrings();
                 TITLE = title.getText().toString();
                 listView.setAdapter(
-                        new ArrayAdapter<>(context, android.R.layout.simple_list_item_1,
+                        new CourseOrProjectAdapter(UserScreen.this,
                                 data.getMainPageResults(TITLE, CATEGORY, DESIGNATION, MAJOR, YEAR, TYPE)));
             }
         });
@@ -204,7 +204,7 @@ public class UserScreen extends Activity {
                 RadioButton rb = (RadioButton) findViewById(R.id.radioButton);
                 rb.setChecked(true);
 
-                listView.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1,
+                listView.setAdapter(new CourseOrProjectAdapter(UserScreen.this,
                         data.getAllCourseAndProject()));
             }
         });

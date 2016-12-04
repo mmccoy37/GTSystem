@@ -13,12 +13,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.TreeMap;
 
+import exception.DupplicateProjectName;
 import exception.NonUniqueEmailException;
 import exception.NonUniqueUserNameException;
+import model.Apply;
 import model.Course;
 import model.Project;
+import model.Report;
 import model.User;
 
 /**
@@ -90,7 +99,6 @@ public class DatabaseAccess {
      */
     public User getUserByUserName(String username) {
         try {
-
             String query = "SELECT U.username, U.password, " +
                     "S.GTechEmail, S.majorName, S.year, U.type " +
                     "FROM USERS AS U " +
@@ -98,9 +106,7 @@ public class DatabaseAccess {
                     "ON U.Username=S.Username " +
                     "WHERE U.username='" + username + "';";
             Statement statement = connection.createStatement();
-
             ResultSet statementResults = statement.executeQuery(query);
-
             if (statementResults.next()) {
                 User user = new User(
                         statementResults.getString(1),
@@ -112,14 +118,44 @@ public class DatabaseAccess {
                 );
                 return user;
             }
-
             return null;
-
         } catch (SQLException e) {
-
             System.out.println("Could not connect to the database: " + e.getMessage());
         }
+        return null;
+    }
 
+    /**
+     * returns the user with the given email in the system if one exists
+     * Null otherwise
+     * @param email the username of the User that will be returned
+     * @return User the user that matches the given username
+     */
+    public User getUserByEmail(String email) {
+        try {
+            String query = "SELECT U.username, U.password, " +
+                    "S.GTechEmail, S.majorName, S.year, U.type " +
+                    "FROM USERS AS U " +
+                    "LEFT JOIN STUDENTS AS S " +
+                    "ON U.Username = S.Username " +
+                    "WHERE S.GTechEmail ='" + email + "';";
+            Statement statement = connection.createStatement();
+            ResultSet statementResults = statement.executeQuery(query);
+            if (statementResults.next()) {
+                User user = new User(
+                        statementResults.getString(1),
+                        statementResults.getString(2),
+                        statementResults.getString(3),
+                        statementResults.getString(4),
+                        statementResults.getInt(5),
+                        statementResults.getInt(6)
+                );
+                return user;
+            }
+            return null;
+        } catch (SQLException e) {
+            System.out.println("Could not connect to the database: " + e.getMessage());
+        }
         return null;
     }
 
@@ -299,7 +335,6 @@ public class DatabaseAccess {
                     "FROM MAJORS " +
                     "WHERE MAJORS.MajorName='" + major + "' ";
             Statement statement = connection.createStatement();
-            statement.execute(query);
             ResultSet statementResults = statement.executeQuery(query);
 
             if (statementResults.next()) {
@@ -422,6 +457,12 @@ public class DatabaseAccess {
                 error.show();
             }
         }
+        Collections.sort(res, new Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                return o1.toString().compareTo(o2.toString());
+            }
+        });
         Log.d("QUERY", "MainPage query results: " + res.toString());
         return res;
     }
@@ -435,7 +476,6 @@ public class DatabaseAccess {
         try {
             String query = "SELECT * FROM COURSE;";
             Statement statement = connection.createStatement();
-            statement.execute(query);
             ResultSet statementResults = statement.executeQuery(query);
 
             while (statementResults.next()) {
@@ -448,7 +488,6 @@ public class DatabaseAccess {
             }
             query = "SELECT * FROM PROJECTS;";
             statement = connection.createStatement();
-            statement.execute(query);
             statementResults = statement.executeQuery(query);
 
             while (statementResults.next()) {
@@ -463,6 +502,12 @@ public class DatabaseAccess {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        Collections.sort(listAll, new Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                return o1.toString().compareTo(o2.toString());
+            }
+        });
         return listAll;
     }
 
@@ -482,7 +527,6 @@ public class DatabaseAccess {
                         "ON Ca.CourseNumber = Co.CourseNumber " +
                         "WHERE Ca.CategoryName='" + cat + "' AND Co.DesignationName='" + des + "';";
                 Statement statement = connection.createStatement();
-                statement.execute(query);
                 ResultSet statementResults = statement.executeQuery(query);
                 while (statementResults.next()) {
                     Course c = new Course(statementResults.getString("CourseNumber"),
@@ -490,7 +534,9 @@ public class DatabaseAccess {
                             statementResults.getInt("EstimatedStudentNum"),
                             statementResults.getString("Instructor"),
                             statementResults.getString("DesignationName"));
-                    res.add(c);
+                    if (!res.contains(c)) {
+                        res.add(c);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -513,25 +559,55 @@ public class DatabaseAccess {
         try {
             String dept = getDeptNameFromMajor(maj);
             for (String cat: cats) {
-                String query = "SELECT P.*, P_R.PRequirements FROM PROJECTS AS P " +
-                        "LEFT JOIN PROJ_REQUIREMENTS AS P_R " +
-                        "ON P.PName = P_R.PName " +
-                        "WHERE P.PName IN " +
-                        "   (SELECT PRO.PName " +
+                String helper = "   (SELECT PRO.PName " +
                         "   FROM PROJECTS AS PRO " +
                         "   LEFT JOIN PROJ_CATEGORY AS PC " +
                         "   ON PRO.PName = PC.ProjectName " +
                         "   LEFT JOIN PROJ_REQUIREMENTS as PR " +
                         "   ON PRO.PName = PR.PName " +
                         "   WHERE PRO.Designation = '" + des + "' " +
-                        "   AND PC.CategoryName = '" + cat + "' " +
+                        "   AND PC.CategoryName = '" + cat + "' ";
+                String extraTable = helper +
                         "   AND (PR.PRequirements = '" + ye + "' " +
                         "       OR PR.PRequirements = '" + maj + "' " +
-                        "       OR PR.PRequirements = '" + dept + "') " +
+                        "       OR PR.PRequirements = '" + dept + "') ";
+                String query = "SELECT P.*, P_R.PRequirements FROM PROJECTS AS P " +
+                        "LEFT JOIN PROJ_REQUIREMENTS AS P_R " +
+                        "ON P.PName = P_R.PName " +
+                        "WHERE P.PName IN " + extraTable +
                         "   GROUP BY PRO.PName HAVING COUNT(*)>1) " +
-                        "AND P_R.PRequirements = '" + ye + "';";
+                        "AND P_R.PRequirements = '" + ye + "' " +
+
+                        "UNION SELECT P.*, P_R.PRequirements FROM PROJECTS AS P " +
+                        "LEFT JOIN PROJ_REQUIREMENTS AS P_R " +
+                        "ON P.PName = P_R.PName " +
+                        "WHERE P.PName IN " + helper +
+                        "   GROUP BY PRO.PName HAVING COUNT(*)=1) " +
+                        "AND P_R.PRequirements = '" + ye + "' " +
+
+                        "UNION SELECT P.*, P_R.PRequirements FROM PROJECTS AS P " +
+                        "LEFT JOIN PROJ_REQUIREMENTS AS P_R " +
+                        "ON P.PName = P_R.PName " +
+                        "WHERE P.PName IN " + helper +
+                        "   GROUP BY PRO.PName HAVING COUNT(*)=1) " +
+                        "AND P_R.PRequirements = '" + maj + "' " +
+
+                        "UNION SELECT P.*, P_R.PRequirements FROM PROJECTS AS P " +
+                        "LEFT JOIN PROJ_REQUIREMENTS AS P_R " +
+                        "ON P.PName = P_R.PName " +
+                        "WHERE P.PName IN " + helper +
+                        "   GROUP BY PRO.PName HAVING COUNT(*)=1) " +
+                        "AND P_R.PRequirements = '" + dept + "' " +
+
+                        "UNION SELECT PRO.*, PR.PRequirements FROM PROJECTS AS PRO " +
+                        "LEFT JOIN PROJ_CATEGORY AS PC " +
+                        "ON PRO.PName = PC.ProjectName " +
+                        "LEFT JOIN PROJ_REQUIREMENTS as PR " +
+                        "ON PRO.PName = PR.PName " +
+                        "WHERE PRO.Designation = '" + des + "' " +
+                        "AND PC.CategoryName = '" + cat + "' " +
+                        "AND PR.PRequirements IS NULL";
                 Statement statement = connection.createStatement();
-                statement.execute(query);
                 ResultSet statementResults = statement.executeQuery(query);
                 while (statementResults.next()) {
                     Project p = new Project(statementResults.getString("PName"),
@@ -540,7 +616,9 @@ public class DatabaseAccess {
                             statementResults.getString("AdvisorName"),
                             statementResults.getString("AdvisorEmail"),
                             statementResults.getString("Designation"));
-                    res.add(p);
+                    if (!res.contains(p)) {
+                        res.add(p);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -559,7 +637,6 @@ public class DatabaseAccess {
         try {
             String query = "SELECT * FROM PROJECTS AS P WHERE P.PName = '" + title + "';";
             Statement statement = connection.createStatement();
-            statement.execute(query);
             ResultSet statementResults = statement.executeQuery(query);
 
             while (statementResults.next()) {
@@ -587,7 +664,6 @@ public class DatabaseAccess {
         try {
             String query = "SELECT * FROM COURSE AS C WHERE C.CourseName = '" + title + "';";
             Statement statement = connection.createStatement();
-            statement.execute(query);
             ResultSet statementResults = statement.executeQuery(query);
 
             while (statementResults.next()) {
@@ -617,7 +693,6 @@ public class DatabaseAccess {
                     "ON C.CourseNumber = Ca.CourseNumber " +
                     "WHERE C.CourseName = '" + name + "';";
             Statement statement = connection.createStatement();
-            statement.execute(query);
             ResultSet statementResults = statement.executeQuery(query);
 
             while (statementResults.next()) {
@@ -642,7 +717,6 @@ public class DatabaseAccess {
                     "ON P.PName = Pc.ProjectName " +
                     "WHERE P.PName = '" + name + "';";
             Statement statement = connection.createStatement();
-            statement.execute(query);
             ResultSet statementResults = statement.executeQuery(query);
 
             while (statementResults.next()) {
@@ -667,7 +741,6 @@ public class DatabaseAccess {
                     "ON P.PName = Pr.PName " +
                     "WHERE P.PName = '" + name + "';";
             Statement statement = connection.createStatement();
-            statement.execute(query);
             ResultSet statementResults = statement.executeQuery(query);
 
             while (statementResults.next()) {
@@ -679,12 +752,204 @@ public class DatabaseAccess {
         return list;
     }
 
+    /**
+     * Update student information by email
+     * @param email email
+     * @param major major
+     * @param year year
+     */
+    public void updateUserByEmail(String email, String major, int year) {
+        try {
+            String query = "UPDATE STUDENTS " +
+                    "SET MajorName='" + major + "', Year = '" + year + "' " +
+                    "WHERE GTechEmail='" + email + "';";
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Apply new project
+     * @param email email of student
+     * @param projectName name of project
+     * @param day day
+     */
+    public void applyProject(String email, String projectName, String day) throws DupplicateProjectName {
+        try {
+            String query = "INSERT INTO APPLY (" +
+                    "GTechEmail, " +
+                    "ProjName, " +
+                    "Date, " +
+                    "Status) " +
+                    "VALUES (" +
+                    "'" + email + "', " +
+                    "'" + projectName + "', " +
+                    "'" + day + "', " +
+                    "'pending');";
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+        } catch (SQLException e) {
+            throw new DupplicateProjectName();
+        }
+    }
+
+    /**
+     * get all applies from database
+     * @return
+     */
+    public List<Apply> getALLApplies() {
+        List<Apply> res = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM APPLY");
+            while (rs.next()) {
+                Apply ap = new Apply(rs.getString("GTechEmail"), rs.getString("ProjName"),
+                        rs.getString("Date"), rs.getString("Status"));
+                res.add(ap);
+            }
+        } catch (SQLException e) {
+            Log.e("QUERY", e.getMessage());
+        }
+        return res;
+    }
+
+    /**
+     * get applies from database by Email
+     * @return list of application
+     */
+    public List<Apply> getAppliesByEmail(String email) {
+        List<Apply> res = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM APPLY " +
+                    "WHERE GTechEmail = '" + email + "';");
+            while (rs.next()) {
+                Apply ap = new Apply(rs.getString("GTechEmail"), rs.getString("ProjName"),
+                        rs.getString("Date"), rs.getString("Status"));
+                res.add(ap);
+            }
+        } catch (SQLException e) {
+            Log.e("QUERY", e.getMessage());
+        }
+        return res;
+    }
+
+    /**
+     * Update status for application
+     * @param pName name of project
+     * @param email email of student
+     * @param status new status
+     */
+    public void updateApplyStatusByProjectNameAndEmail(String pName, String email, String status) {
+        try {
+            String query = "UPDATE APPLY " +
+                    "SET Status = '" + status + "' " +
+                    "WHERE GTechEmail = '" + email + "' " +
+                    "AND ProjName = '" + pName + "';";
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+        } catch (SQLException e) {
+            Log.e("QUERY", e.getMessage());
+        }
+    }
+
+    /**
+     * get applies from database by Email
+     * @return list of application
+     */
+    public List<Apply> getListApplyByProjectname(String pName) {
+        List<Apply> res = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM APPLY " +
+                    "WHERE ProjName = '" + pName + "';");
+            while (rs.next()) {
+                Apply ap = new Apply(rs.getString("GTechEmail"), rs.getString("ProjName"),
+                        rs.getString("Date"), rs.getString("Status"));
+                res.add(ap);
+            }
+        } catch (SQLException e) {
+            Log.e("QUERY", e.getMessage());
+        }
+        return res;
+    }
+
+    /**
+     * Get list of all reports
+     * @return list of reports
+     */
+    public List<Report> getAllListReport() {
+        List<Report> res = new ArrayList<>();
+        Map<String, Integer> mapApplies = getListAppliesWithNumberOfApplicant();
+        for (Map.Entry<String, Integer> m: mapApplies.entrySet()) {
+            Report r = new Report(m.getKey());
+            res.add(r);
+        }
+        Collections.sort(res, new Comparator<Report>() {
+            @Override
+            public int compare(Report o1, Report o2) {
+                if (o1.getRate() > o2.getRate()) {
+                    return -1;
+                } else if (o1.getRate() < o2.getRate()) {
+                    return 1;
+                } else {
+                    return o1.getProjectName().compareTo(o2.getProjectName());
+                }
+            }
+        });
+        return res;
+    }
+
+    /**
+     * Get map list of prject name with #of applicant
+     * @return Map
+     */
+    public Map<String, Integer> getListAppliesWithNumberOfApplicant() {
+        HashMap<String, Integer> list = new HashMap<>();
+        for (Apply apply: getALLApplies()) {
+            if (!list.containsKey(apply.getProjectName())) {
+                list.put(apply.getProjectName(), 1);
+            } else {
+                list.put(apply.getProjectName(), list.get(apply.getProjectName()) + 1);
+            }
+        }
+        TreeMap<String, Integer> sortedMap = sortMapByValue(list);
+        return sortedMap;
+    }
 
 
+    /**
+     * Sort HashMap
+     * @param map hashmap
+     * @return TreeMap
+     */
+    public TreeMap<String, Integer> sortMapByValue(HashMap<String, Integer> map){
+        Comparator<String> comparator = new ValueComparator(map);
+        //TreeMap is a map sorted by its keys.
+        //The comparator is used to sort the TreeMap by keys.
+        TreeMap<String, Integer> result = new TreeMap<String, Integer>(comparator);
+        result.putAll(map);
+        return result;
+    }
 
-
-
-
+    private class ValueComparator implements Comparator<String>{
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        public ValueComparator(HashMap<String, Integer> map){
+            this.map.putAll(map);
+        }
+        @Override
+        public int compare(String s1, String s2) {
+            if(map.get(s1) > map.get(s2)){
+                return -1;
+            } else if (map.get(s1) < map.get(s2)){
+                return 1;
+            } else {
+                return s1.compareTo(s2);
+            }
+        }
+    }
 
 
 

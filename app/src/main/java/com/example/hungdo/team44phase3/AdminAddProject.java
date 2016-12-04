@@ -3,6 +3,7 @@ package com.example.hungdo.team44phase3;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -50,6 +51,7 @@ public class AdminAddProject extends AppCompatActivity {
         data.setContext(this);
         //set view
         setContentView(R.layout.activity_admin_add_project);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         //listeners
         setupSpinners();
         setupOther();

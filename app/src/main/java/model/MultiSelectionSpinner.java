@@ -74,7 +74,7 @@ public class MultiSelectionSpinner extends Spinner implements
             }
             if (all == true) {
                 simple_adapter.clear();
-                simple_adapter.add("ALL");
+                simple_adapter.add("All");
             }
 
         } else {

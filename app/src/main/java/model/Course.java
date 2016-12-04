@@ -62,9 +62,42 @@ public class Course {
         this.designation = designation;
     }
 
+    /**
+     * Set equals to compare course number.
+     * @param obj the user instance
+     * @return whether the object is a course and their number matches
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (null == obj) {
+            return false;
+        }
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Course)) {
+            return false;
+        }
+        Course c = (Course) obj;
+        return this.course_Num.equals(c.getCourse_Num());
+    }
+
+    /**
+     * Set hash code equal to the username's hashcode.
+     * @return the username's hashcode
+     */
+    @Override
+    public int hashCode() {
+        return course_Num.hashCode();
+    }
+
     @Override
     public String toString() {
         return name + " (Course)";
+    }
+
+    public String getType() {
+        return "Course";
     }
 
 }
