@@ -22,6 +22,7 @@ import listViewAdapter.AplicationAdapter;
 import model.Apply;
 import model.Project;
 import model.User;
+import model.YearLevel;
 
 public class ViewAndApplyProjectScreen extends Activity {
 
@@ -82,6 +83,17 @@ public class ViewAndApplyProjectScreen extends Activity {
     public void onClick(View v) {
         if (v.getId() == R.id.btnApply) {
             User u = data.getUserByUserName(LoginActivity.USERNAME);
+            int yearNum = u.getYear();
+            String yearName = "";
+            if (yearNum == 1) {
+                yearName = YearLevel.FR.toString();
+            } else if (yearNum == 2){
+                yearName = YearLevel.SO.toString();
+            } else if (yearNum == 3) {
+                yearName = YearLevel.JR.toString();
+            } else {
+                yearName = YearLevel.SR.toString();
+            }
             String major = u.getMajor();
             if (major == null) {
                 AlertDialog alertDialog = new AlertDialog.Builder(ViewAndApplyProjectScreen.this).create(); //Read Update
@@ -93,14 +105,21 @@ public class ViewAndApplyProjectScreen extends Activity {
                     }});
                 alertDialog.show();
             } else {
-                try {
-                    data.applyProject(u.getEmail(), p.getName(), currentDay);
-                    Toast toast = Toast.makeText(this, "Apply Successful", Toast.LENGTH_SHORT);
-                    toast.show();
-                } catch (DupplicateProjectName e) {
-                    Toast toast = Toast.makeText(this, "You applied this project before!", Toast.LENGTH_SHORT);
+                List<Project> listProject = data.getListProjectByFilter(data.getCategories(), p.getDesignation(), major, yearName);
+                if (listProject.contains(p)) {
+                    try {
+                        data.applyProject(u.getEmail(), p.getName(), currentDay);
+                        Toast toast = Toast.makeText(this, "Apply Successful", Toast.LENGTH_SHORT);
+                        toast.show();
+                    } catch (DupplicateProjectName e) {
+                        Toast toast = Toast.makeText(this, "You applied this project before!", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                } else {
+                    Toast toast = Toast.makeText(this, "You are not qualify to apply!", Toast.LENGTH_SHORT);
                     toast.show();
                 }
+
             }
         }
     }
