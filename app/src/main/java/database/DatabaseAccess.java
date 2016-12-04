@@ -260,9 +260,9 @@ public class DatabaseAccess {
     }
 
     public String addNewProject(
-            String pname,String pEstStudent, String pdesc, String padv,
-            String pemail, String pdesignation, String pyear, String pmajor,
-            String pdept, List<String> pcategories) {
+        String pname,String pEstStudent, String pdesc, String padv,
+        String pemail, String pdesignation, String pyear, String pmajor,
+        String pdept, List<String> pcategories) {
         try {
             //project basic info
             String query = "INSERT INTO PROJECTS (" +
@@ -765,7 +765,13 @@ public class DatabaseAccess {
                     "WHERE GTechEmail='" + email + "';";
             Statement statement = connection.createStatement();
             statement.execute(query);
+            connection.commit();
         } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             System.out.println(e.getMessage());
         }
     }
@@ -790,7 +796,13 @@ public class DatabaseAccess {
                     "'pending');";
             Statement statement = connection.createStatement();
             statement.execute(query);
+            connection.commit();
         } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             throw new DupplicateProjectName();
         }
     }
@@ -850,7 +862,13 @@ public class DatabaseAccess {
                     "AND ProjName = '" + pName + "';";
             Statement statement = connection.createStatement();
             statement.execute(query);
+            connection.commit();
         } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             Log.e("QUERY", e.getMessage());
         }
     }
@@ -977,6 +995,7 @@ public class DatabaseAccess {
                     System.out.println("Successfully connected to " +
                             "MySQL server using TCP/IP...");
             } catch(Exception e) {
+                Log.e("SQL", e.getMessage());
                 System.err.println("Exception: " + e.getMessage());
                 System.out.println("Successfully connected to " +
                         "MySQL server using TCP/IP...");
