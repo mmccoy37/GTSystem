@@ -559,23 +559,54 @@ public class DatabaseAccess {
         try {
             String dept = getDeptNameFromMajor(maj);
             for (String cat: cats) {
-                String query = "SELECT P.*, P_R.PRequirements FROM PROJECTS AS P " +
-                        "LEFT JOIN PROJ_REQUIREMENTS AS P_R " +
-                        "ON P.PName = P_R.PName " +
-                        "WHERE P.PName IN " +
-                        "   (SELECT PRO.PName " +
+                String helper = "   (SELECT PRO.PName " +
                         "   FROM PROJECTS AS PRO " +
                         "   LEFT JOIN PROJ_CATEGORY AS PC " +
                         "   ON PRO.PName = PC.ProjectName " +
                         "   LEFT JOIN PROJ_REQUIREMENTS as PR " +
                         "   ON PRO.PName = PR.PName " +
                         "   WHERE PRO.Designation = '" + des + "' " +
-                        "   AND PC.CategoryName = '" + cat + "' " +
+                        "   AND PC.CategoryName = '" + cat + "' ";
+                String extraTable = helper +
                         "   AND (PR.PRequirements = '" + ye + "' " +
                         "       OR PR.PRequirements = '" + maj + "' " +
-                        "       OR PR.PRequirements = '" + dept + "') " +
+                        "       OR PR.PRequirements = '" + dept + "') ";
+                String query = "SELECT P.*, P_R.PRequirements FROM PROJECTS AS P " +
+                        "LEFT JOIN PROJ_REQUIREMENTS AS P_R " +
+                        "ON P.PName = P_R.PName " +
+                        "WHERE P.PName IN " + extraTable +
                         "   GROUP BY PRO.PName HAVING COUNT(*)>1) " +
-                        "AND P_R.PRequirements = '" + ye + "';";
+                        "AND P_R.PRequirements = '" + ye + "' " +
+
+                        "UNION SELECT P.*, P_R.PRequirements FROM PROJECTS AS P " +
+                        "LEFT JOIN PROJ_REQUIREMENTS AS P_R " +
+                        "ON P.PName = P_R.PName " +
+                        "WHERE P.PName IN " + helper +
+                        "   GROUP BY PRO.PName HAVING COUNT(*)=1) " +
+                        "AND P_R.PRequirements = '" + ye + "' " +
+
+                        "UNION SELECT P.*, P_R.PRequirements FROM PROJECTS AS P " +
+                        "LEFT JOIN PROJ_REQUIREMENTS AS P_R " +
+                        "ON P.PName = P_R.PName " +
+                        "WHERE P.PName IN " + helper +
+                        "   GROUP BY PRO.PName HAVING COUNT(*)=1) " +
+                        "AND P_R.PRequirements = '" + maj + "' " +
+
+                        "UNION SELECT P.*, P_R.PRequirements FROM PROJECTS AS P " +
+                        "LEFT JOIN PROJ_REQUIREMENTS AS P_R " +
+                        "ON P.PName = P_R.PName " +
+                        "WHERE P.PName IN " + helper +
+                        "   GROUP BY PRO.PName HAVING COUNT(*)=1) " +
+                        "AND P_R.PRequirements = '" + dept + "' " +
+
+                        "UNION SELECT PRO.*, PR.PRequirements FROM PROJECTS AS PRO " +
+                        "LEFT JOIN PROJ_CATEGORY AS PC " +
+                        "ON PRO.PName = PC.ProjectName " +
+                        "LEFT JOIN PROJ_REQUIREMENTS as PR " +
+                        "ON PRO.PName = PR.PName " +
+                        "WHERE PRO.Designation = '" + des + "' " +
+                        "AND PC.CategoryName = '" + cat + "' " +
+                        "AND PR.PRequirements IS NULL";
                 Statement statement = connection.createStatement();
                 ResultSet statementResults = statement.executeQuery(query);
                 while (statementResults.next()) {
