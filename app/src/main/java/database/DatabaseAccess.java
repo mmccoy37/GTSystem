@@ -9,9 +9,11 @@ import com.example.hungdo.team44phase3.UserScreen;
 
 import java.sql.Connection;;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -182,8 +184,8 @@ public class DatabaseAccess {
                         "VALUES ('" + username +
                         "', '" + password + "', '0'" +
                         ");";
-                Statement statement = connection.createStatement();
-                statement.execute(query);
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.executeUpdate();
                 query = "INSERT INTO STUDENTS (" +
                         "GTechEmail, " +
                         "Username, " +
@@ -192,11 +194,16 @@ public class DatabaseAccess {
                         "VALUES (" +
                         "'" + email + "', " +
                         "'" + username + "', " +
-                        "'" + major + "', " +
+                        "?, " +
                         "'" + year + "'" +
                         ");";
-                statement = connection.createStatement();
-                statement.execute(query);
+                statement= connection.prepareStatement(query);
+                if (major != null) {
+                    statement.setString(1, major);
+                } else {
+                    statement.setNull(1, Types.VARCHAR);
+                }
+                statement.executeUpdate();
                 connection.commit();
             } catch (SQLException s) {
                 System.out.println(s.getMessage());
